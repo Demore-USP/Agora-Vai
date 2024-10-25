@@ -3,15 +3,16 @@
 #include <string.h>
 
 void cadastrar_produto(Lista_produto *lista_produtos, int *erro);
-void dar_lance(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *erro);
+void dar_lance(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *erro);
 void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, int *erro);
+void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro);
 
 int main()
 {
 
     Lista_produto lista_produtos;
     Lista_usuario lista_usuarios;
-    int erro = 0, opcao = 0, qtd_produtos = 0;
+    int erro = 0, opcao = 0, qtd_produtos = 0, qtd_usuarios = 0;
 
     inicializar_lista_produto(&lista_produtos);
     inicializar_lista_usuario(&lista_usuarios);
@@ -82,7 +83,7 @@ void cadastrar_produto(Lista_produto *lista_produtos, int *qtd_produtos, int *er
     return;
 }
 
-void dar_lance(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *erro) {
+void dar_lance(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *erro) {
     char nome_usuario[100], nome_produto[100];
     float valor;
 
@@ -98,7 +99,10 @@ void dar_lance(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int
     if(*erro)   
         //tratar erro
         return;
-    
+
+    if(!esta_na_lista_usuario(lista_usuarios, nome_usuario)) 
+        (*qtd_usuarios)++;
+
     printf("Lance dado com sucesso!");
     return;
 }
@@ -158,10 +162,48 @@ void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, in
             }
         }
     }
-    
+
     if(*erro)
         return;
 
     printf("Listagem completa!\n");
     return;
+}
+
+void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro) {
+    char *nome_usuario, *nome_produto1, *nome_produto2;
+    int tam, flag1 = 0, flag2 = 0;
+    Lista *lista_produtos_usuario;
+    inicializar_lista(&lista_produtos_usuario);
+
+    for(int i = 0; i < qtd_usuarios; i++) {
+        nome_usuario = devolver_nome_usuario(lista_usuarios, i, erro);
+        lista_produtos_usuario = devolver_lista_produtos(lista_usuarios, nome_usuario, erro);
+        tam = tamanho_lista(lista_produtos_usuario);
+        for(int j = 0; j < tam; j++) {
+            nome_produto1 = devolver_produto(lista_produtos_usuario, j, erro);
+            if(vencedor_produto(lista_produtos, nome_produto1, nome_usuario)) 
+                continue;
+            else {
+                flag1 = 1;
+                break;
+            }
+        }
+        if (flag1 == 0)
+            continue;
+        printf("Para %s: não gostaria de dar um lance por:\n", nome_usuario);
+        for(int j = 0; j < qtd_produtos; j++) {
+            nome_produto2 = devolver_nome_produto(lista_produtos, j, erro);
+            for(int k = 0; k < tam; k++) {
+                nome_produto1 = devolver_produto(lista_produtos_usuario, k, erro);
+                if(sao_iguais(nome_produto1, nome_produto2)) {
+                    flag2 = 1;
+                    break;
+                }
+            }
+            if (flag2 == 0) {
+                printf("- %s\n", nome_produto2);
+            }
+        }
+    }
 }
