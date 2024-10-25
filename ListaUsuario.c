@@ -65,5 +65,6 @@ void inserir_lista_usuario(Lista_usuario *L, char *nome_usuario, char *nome_prod
 
 void excluir_lista_usuario(Lista_usuario *L, int *erro){
     
+    
 }
 

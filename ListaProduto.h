@@ -9,13 +9,13 @@ typedef struct no_lista {
     char *produto;
     Pilha lances;
     struct no_lista *prox;
-} No_Lista;
+} No_ListaProduto;
 
 // Ponteiros de início e fim da lista de produtos
 typedef struct Lista {
     No_Lista *ini;
     No_Lista *fim;
-} Lista;
+} Lista_Produto;
 
 
 #endif

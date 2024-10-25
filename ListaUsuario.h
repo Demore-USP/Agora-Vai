@@ -2,6 +2,7 @@
 #define LISTAUSUARIO_H
 
 #include "ListaProduto.h"
+#include "Lista.h"
 
 typedef struct {
     char *nome;
@@ -24,7 +25,7 @@ typedef struct Lista_usuario {
 
 void inicializar_lista_usuario(Lista_usuario *);
 int lista_simples_usuario(Lista_usuario *);
-void inserir_lista_usuario(Lista_usuario *, char *, int *);
+void inserir_lista_usuario(Lista_usuario *, char *, char*, int *);
 void excluir_lista_usuario(Lista_usuario *, int *);
 
 #endif
