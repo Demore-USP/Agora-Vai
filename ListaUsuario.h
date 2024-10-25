@@ -1,16 +1,25 @@
-#ifndef LISTA_USUARIO_H
-#define LISTA_USUARIO_H
+#ifndef LISTAUSUARIO_H
+#define LISTAUSUARIO_H
 
-// Struct que armazena os nomes de todos 
-typedef struct no_usuario {
+#include "ListaProduto.h"
+
+typedef struct {
     char *nome;
+} usuario;
+
+
+// Struct que armazena o nome do usuario e os produtos em que ele deu lance 
+typedef struct no_usuario {
+    usuario nome_usuario;
+    Lista produtos;
     struct no_usuario *prox;
-} No_usuario;
+} No_Usuario;
+
 
 // Ponteiros de início e fim da lista geral
 typedef struct Lista_usuario {
-    No *ini;
-    No *fim;
+    No_Usuario *inicio;
+    No_Usuario *fim;
 } Lista_usuario;
 
 void inicializar_lista_usuario(Lista_usuario *);
