@@ -16,10 +16,12 @@ typedef struct Fila {
 
 void inicializar_fila(Fila *);
 int fila_vazia(Fila *);
-void inserir_na_fila(Fila *, char *, int *);
+void inserir_na_fila(Fila *, char **, int *);
+int esta_na_fila(Fila *, char *, int *);
 char *remover_da_fila(Fila *, int *);
+char *retorna_inicio_fila(Fila, int *);
+int tamanho_fila(Fila *);
 void copiar_fila(Fila *, Fila *, int *);
 void excluir_fila(Fila *, int *);
-int esta_na_fila(Fila *, char *, int *);
 
 #endif

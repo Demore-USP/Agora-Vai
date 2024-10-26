@@ -1,5 +1,5 @@
-#ifndef USER_H
-#define USER_H
+#ifndef USUARIO_H
+#define USUARIO_H
 
 typedef struct {
     char *nome;

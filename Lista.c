@@ -68,7 +68,7 @@ char *devolver_produto(Lista *L, int indice, int *erro) {
         aux = aux->prox;
     }
 
-    return aux->ponteiro_produto->string;
+    return aux->ponteiro_produto->nome;
 }
 
 void excluir_lista(Lista *L, int *erro) {

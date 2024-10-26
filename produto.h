@@ -1,8 +1,8 @@
-#ifndef PROD_H
-#define PROD_H
+#ifndef PRODUTO_H
+#define PRODUTO_H
 
 typedef struct {
-    char *string;
+    char *nome;
 } produto;
 
 #endif
