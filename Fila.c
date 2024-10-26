@@ -25,7 +25,8 @@ void inserir_na_fila(Fila *F, char *nome_usuario, int *erro)
         *erro = 1;
         return; // Caso a alocação falhe, retorna e o erro é atualizado
     }
-    novo->ponteiro_usuario->nome = nome_usuario; // o ponteiro para o nome do usuario aponta para o endereço do nome
+
+    novo->ponteiro_usuario = &nome_usuario; // o ponteiro para o nome do usuario aponta para o endereço do nome
 
     novo->prox = NULL; // Sempre aponta para NULL, pois sempre é inserido no fim
 
@@ -57,7 +58,7 @@ int esta_na_fila(Fila *F, char *nome, int *erro)
     // Percorre toda a fila
     while (aux != NULL)
     {
-        if (strcmp(aux->ponteiro_usuario->nome, nome) == 0)
+        if (aux->ponteiro_usuario == &nome)
         {
             *erro = 0;
             return 1; // Se encontrar o nome, retorna 1 (positivo)
@@ -78,8 +79,8 @@ char *remover_da_fila(Fila *F, int *erro)
         return NULL;
     }
 
-    char *nome;
-    nome = F->inicio->ponteiro_usuario->nome;
+    char **nome;
+    nome = F->inicio->ponteiro_usuario;
 
     // Ponteiro auxiliar pra não modificar 'ini'
     No_fila *aux = F->inicio;
@@ -93,18 +94,20 @@ char *remover_da_fila(Fila *F, int *erro)
     free(aux); // Libera o nó
 
     *erro = 0; // Setando o erro
-    return nome;
+    return *nome;
 }
 
 char *retorna_inicio_fila(Fila F, int *erro)
 {
+    char **nome;
     if (fila_vazia(&F))
     {
         *erro = 1;
         return NULL;
     }
+    nome = F.inicio->ponteiro_usuario;
     *erro = 0;
-    return F.inicio->ponteiro_usuario->nome;
+    return *nome;
 }
 
 int tamanho_fila(Fila *F)
@@ -121,6 +124,7 @@ int tamanho_fila(Fila *F)
 
 void copiar_fila(Fila *fila_origem, Fila *fila_destino, int *erro)
 {
+    char **nome;
     if (fila_vazia(fila_origem))
     {
         *erro = 1;
@@ -139,7 +143,8 @@ void copiar_fila(Fila *fila_origem, Fila *fila_destino, int *erro)
     // Percorre a fila original e copia os elementos para a fila destino
     while (no_aux != NULL)
     {
-        inserir_na_fila(fila_destino, no_aux->ponteiro_usuario->nome, erro);
+        nome = no_aux->ponteiro_usuario;
+        inserir_na_fila(fila_destino, *nome, erro);
         if (*erro)
         {
             *erro = 3;

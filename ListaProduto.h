@@ -13,14 +13,16 @@
 // 4- Lance não válido
 
 // Struct que armazena o produto, com seus respectivos lances
-typedef struct no {
-    produto nome_produto;
+typedef struct no
+{
+    char *nome_produto;
     Pilha lances;
     struct no *prox;
 } No_ListaProduto;
 
 // Ponteiros de início e fim da lista de produtos
-typedef struct Lista_produto {
+typedef struct Lista_produto
+{
     No_ListaProduto *ini;
     No_ListaProduto *fim;
 } Lista_produto;
@@ -33,4 +35,4 @@ Pilha *pilha_especifica(Lista_produto *, char *, int *);
 int vencedor_produto(Lista_produto *, char *, char *);
 void excluir_lista_produto(Lista_produto *, int *);
 
-#endif 
+#endif

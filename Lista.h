@@ -4,7 +4,7 @@
 #include "produto.h"
 
 typedef struct no_lista {
-    produto *ponteiro_produto;
+    char **ponteiro_produto;
     struct no_lista *prox;
 } No_Lista;
 

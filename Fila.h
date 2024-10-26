@@ -5,7 +5,7 @@
 
 // Struct que armazena um ponteiro pra ponteiro com o nome dos usuarios encadeados
 typedef struct no_fila {
-    usuario *ponteiro_usuario;
+    char **ponteiro_usuario;
     struct no_fila *prox;
 } No_fila;
 
