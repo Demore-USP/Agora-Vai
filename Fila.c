@@ -1,7 +1,7 @@
+#include "Fila.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Fila.h"
 
 // Função que inicializa a fila
 void inicializar_fila(Fila *F)
@@ -26,7 +26,16 @@ void inserir_na_fila(Fila *F, char *nome_usuario, int *erro)
         return; // Caso a alocação falhe, retorna e o erro é atualizado
     }
 
-    novo->ponteiro_usuario = &nome_usuario; // o ponteiro para o nome do usuario aponta para o endereço do nome
+    // Alocar memória para ponteiro_produto dentro de novo
+    novo->ponteiro_usuario = (usuario *)malloc(sizeof(usuario));
+    if (novo->ponteiro_usuario == NULL)
+    {
+        *erro = 1;
+        free(novo); // Libera 'novo' em caso de falha
+        return;
+    }
+
+    novo->ponteiro_usuario->nome = nome_usuario; // o ponteiro para o nome do usuario aponta para o endereço do nome
 
     novo->prox = NULL; // Sempre aponta para NULL, pois sempre é inserido no fim
 
@@ -58,7 +67,7 @@ int esta_na_fila(Fila *F, char *nome, int *erro)
     // Percorre toda a fila
     while (aux != NULL)
     {
-        if (aux->ponteiro_usuario == &nome)
+        if (strcmp(aux->ponteiro_usuario->nome, nome) == 0)
         {
             *erro = 0;
             return 1; // Se encontrar o nome, retorna 1 (positivo)
@@ -79,8 +88,8 @@ char *remover_da_fila(Fila *F, int *erro)
         return NULL;
     }
 
-    char **nome;
-    nome = F->inicio->ponteiro_usuario;
+    char *nome;
+    nome = F->inicio->ponteiro_usuario->nome;
 
     // Ponteiro auxiliar pra não modificar 'ini'
     No_fila *aux = F->inicio;
@@ -94,20 +103,18 @@ char *remover_da_fila(Fila *F, int *erro)
     free(aux); // Libera o nó
 
     *erro = 0; // Setando o erro
-    return *nome;
+    return nome;
 }
 
 char *retorna_inicio_fila(Fila F, int *erro)
 {
-    char **nome;
     if (fila_vazia(&F))
     {
         *erro = 1;
         return NULL;
     }
-    nome = F.inicio->ponteiro_usuario;
     *erro = 0;
-    return *nome;
+    return F.inicio->ponteiro_usuario->nome;
 }
 
 int tamanho_fila(Fila *F)
@@ -124,7 +131,6 @@ int tamanho_fila(Fila *F)
 
 void copiar_fila(Fila *fila_origem, Fila *fila_destino, int *erro)
 {
-    char **nome;
     if (fila_vazia(fila_origem))
     {
         *erro = 1;
@@ -143,8 +149,7 @@ void copiar_fila(Fila *fila_origem, Fila *fila_destino, int *erro)
     // Percorre a fila original e copia os elementos para a fila destino
     while (no_aux != NULL)
     {
-        nome = no_aux->ponteiro_usuario;
-        inserir_na_fila(fila_destino, *nome, erro);
+        inserir_na_fila(fila_destino, no_aux->ponteiro_usuario->nome, erro);
         if (*erro)
         {
             *erro = 3;

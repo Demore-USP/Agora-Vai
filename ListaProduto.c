@@ -2,8 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "ListaProduto.h"
+#include "produto.h"
 #include "PilhaLances.h"
 #include "ListaUsuario.h"
+#include "usuario.h"
 #include "Fila.h"
 #include "Lista.h"
 
@@ -23,8 +25,8 @@ void inserir_lista_produto(Lista_produto *L, char *nome_produto, int *erro)
     }
 
     // Aloca memória para o nome do produto
-    novo->nome_produto = (char *)malloc((strlen(nome_produto) + 1) * sizeof(char));
-    if (novo->nome_produto == NULL)
+    novo->nome_produto.nome = (char *)malloc((strlen(nome_produto) + 1) * sizeof(char));
+    if (novo->nome_produto.nome == NULL)
     {
         free(novo);
         *erro = 1;
@@ -32,7 +34,7 @@ void inserir_lista_produto(Lista_produto *L, char *nome_produto, int *erro)
     }
 
     // Copia o nome do produto
-    strcpy(novo->nome_produto, nome_produto);
+    strcpy(novo->nome_produto.nome, nome_produto);
 
     inicializar_pilha(&novo->lances); // Inicializa a pilha de lances
 
@@ -46,17 +48,17 @@ void inserir_lista_produto(Lista_produto *L, char *nome_produto, int *erro)
     // Percorre a lista até encontrar a posição correta de inserir o produto.
     // Quando a condição for quebrada, 'aux' apontará para o elemento à frente do novo produto,
     // e 'ant' apontará para o anterior
-    while (aux != NULL && strcmp(aux->nome_produto, nome_produto) < 0)
+    while (aux != NULL && strcmp(aux->nome_produto.nome, nome_produto) < 0)
     {
         ant = aux;
         aux = aux->prox;
     }
 
     // Verifica se o produto já existe
-    if (aux != NULL && strcmp(aux->nome_produto, nome_produto) == 0)
+    if (aux != NULL && strcmp(aux->nome_produto.nome, nome_produto) == 0)
     {
         *erro = 3;
-        free(novo->nome_produto);
+        free(novo->nome_produto.nome);
         free(novo);
         return;
     }
@@ -85,7 +87,7 @@ void inserir_lance_produto(Lista_produto *LP, Lista_usuario *LU, char *nome_usua
     No_ListaProduto *aux = LP->ini;
     Lista temp;
     float topo;
-    while (aux != NULL && (strcmp(aux->nome_produto, nome_produto)) != 0)
+    while (aux != NULL && (strcmp(aux->nome_produto.nome, nome_produto)) != 0)
     {
         aux = aux->prox;
     }
@@ -135,13 +137,13 @@ char *devolver_nome_produto(Lista_produto *L, int indice, int *erro)
         aux = aux->prox;
     }
 
-    return aux->nome_produto;
+    return aux->nome_produto.nome;
 }
 
 Pilha *pilha_especifica(Lista_produto *LP, char *nome_produto, int *erro)
 {
     No_ListaProduto *aux = LP->ini;
-    while (aux != NULL && (strcmp(aux->nome_produto, nome_produto)) != 0)
+    while (aux != NULL && (strcmp(aux->nome_produto.nome, nome_produto)) != 0)
     {
         aux = aux->prox;
     }
@@ -156,16 +158,16 @@ Pilha *pilha_especifica(Lista_produto *LP, char *nome_produto, int *erro)
 int vencedor_produto(Lista_produto *LP, char *nome_produto, char *nome_usuario)
 {
     No_ListaProduto *aux = LP->ini;
-    char **vencedor;
+    char *vencedor;
 
-    while (aux != NULL && (strcmp(aux->nome_produto, nome_produto)) != 0)
+    while (aux != NULL && (strcmp(aux->nome_produto.nome, nome_produto)) != 0)
     {
         aux = aux->prox;
     }
 
-    vencedor = aux->lances.topo->fila_usuarios.inicio->ponteiro_usuario;
+    vencedor = aux->lances.topo->fila_usuarios.inicio->ponteiro_usuario->nome;
 
-    if (nome_usuario == *vencedor)
+    if (nome_usuario == vencedor)
     {
         return 1;
     }
@@ -187,8 +189,8 @@ void excluir_lista_produto(Lista_produto *L, int *erro)
         if (!pilha_vazia(&temp->lances))
             excluir_pilha(&temp->lances, erro);
 
-        free(temp->nome_produto); // Libera o produto
-        free(temp);               // Libera o nó atual
+        free(temp->nome_produto.nome); // Libera o produto
+        free(temp);                    // Libera o nó atual
     }
 
     // Ajustando os ponteiros

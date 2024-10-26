@@ -1,12 +1,16 @@
 #ifndef LISTA_H
 #define LISTA_H
 
-typedef struct no_lista {
-    char **ponteiro_produto;
+#include "produto.h"
+
+typedef struct no_lista
+{
+    produto *ponteiro_produto;
     struct no_lista *prox;
 } No_Lista;
 
-typedef struct {
+typedef struct
+{
     No_Lista *inicio;
     No_Lista *fim;
 } Lista;

@@ -1,6 +1,6 @@
 #include "ListaProduto.h"
 #include "ListaUsuario.h"
-#include "fila.h"
+#include "Fila.h"
 #include "PilhaLances.h"
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,7 +26,7 @@ int esta_na_lista_usuario(Lista_usuario *L, char *nome_usuario)
 
     while (aux != NULL)
     {
-        if (strcmp(aux->nome_usuario, nome_usuario) == 0)
+        if (strcmp(aux->nome_usuario.nome, nome_usuario) == 0)
             return 1;
     }
 
@@ -45,8 +45,8 @@ void inserir_lista_usuario(Lista_usuario *L, char *nome_usuario, char *nome_prod
     }
 
     // Aloca memória para o nome do usuario
-    novo->nome_usuario = (char *)malloc((strlen(nome_usuario) + 1) * sizeof(char));
-    if (novo->nome_usuario == NULL)
+    novo->nome_usuario.nome = (char *)malloc((strlen(nome_usuario) + 1) * sizeof(char));
+    if (novo->nome_usuario.nome == NULL)
     {
         free(novo);
         *erro = 2;
@@ -54,7 +54,7 @@ void inserir_lista_usuario(Lista_usuario *L, char *nome_usuario, char *nome_prod
     }
 
     // Copia o nome do usuario
-    strcpy(novo->nome_usuario, nome_usuario);
+    strcpy(novo->nome_usuario.nome, nome_usuario);
 
     inicializar_lista(&novo->produtos); // Inicializa a lista de produtos para este usuário
 
@@ -88,7 +88,7 @@ char *devolver_nome_usuario(Lista_usuario *L, int indice, int *erro)
     if (aux != NULL)
     {
         *erro = 0;
-        return aux->nome_usuario;
+        return aux->nome_usuario.nome;
     }
     *erro = 1;
     return NULL;
@@ -100,7 +100,7 @@ Lista devolver_lista_produtos(Lista_usuario *L, char *nome_usuario, int *erro)
 
     while (aux != NULL)
     {
-        if (strcmp(aux->nome_usuario, nome_usuario) == 0)
+        if (strcmp(aux->nome_usuario.nome, nome_usuario) == 0)
         {
             *erro = 0;
             return aux->produtos;
@@ -128,9 +128,9 @@ void excluir_lista_usuario(Lista_usuario *L, int *erro)
     {
         temp = aux; // Guarda o nó atual para liberar
         excluir_lista(&aux->produtos, erro);
-        aux = aux->prox;          // Avança para o próximo nó
-        free(temp->nome_usuario); // Libera o nome
-        free(temp);               // Libera o nó atual
+        aux = aux->prox;               // Avança para o próximo nó
+        free(temp->nome_usuario.nome); // Libera o nome
+        free(temp);                    // Libera o nó atual
     }
 
     // Ajustando os ponteiros

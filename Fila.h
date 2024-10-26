@@ -1,13 +1,17 @@
 #ifndef FILA_H
 #define FILA_H
 
+#include "usuario.h"
+
 // Struct que armazena um ponteiro pra ponteiro com o nome dos usuarios encadeados
-typedef struct no_fila {
-    char **ponteiro_usuario;
+typedef struct no_fila
+{
+    usuario *ponteiro_usuario;
     struct no_fila *prox;
 } No_fila;
 
-typedef struct Fila {
+typedef struct Fila
+{
     No_fila *inicio;
     No_fila *fim;
 } Fila;

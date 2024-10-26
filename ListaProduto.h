@@ -3,8 +3,8 @@
 
 #include "PilhaLances.h"
 #include "Fila.h"
+#include "produto.h"
 #include "ListaUsuario.h"
-#include "Lista.h"
 
 // Erros:
 // 1- Erro ao alocar memória
@@ -15,7 +15,7 @@
 // Struct que armazena o produto, com seus respectivos lances
 typedef struct no
 {
-    char *nome_produto;
+    produto nome_produto;
     Pilha lances;
     struct no *prox;
 } No_ListaProduto;
