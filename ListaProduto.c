@@ -121,7 +121,6 @@ void inserir_lance_produto(Lista_produto *LP, Lista_usuario *LU, char *nome_usua
     else
     {
         empilhar(&aux->lances, *valor, erro);
-        inicializar_fila(&aux->lances.topo->fila_usuarios);
         inserir_na_fila(&aux->lances.topo->fila_usuarios, nome_usuario, erro);
     }
 

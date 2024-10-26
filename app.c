@@ -165,11 +165,11 @@ void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, in
     for (int i = 0; i < *qtd_produtos; i++)
     {
         nome_produto = devolver_nome_produto(lista_produtos, i, erro);
-        printf("%s ", nome_produto);
+        printf("%s: ", nome_produto);
         pilha_aux = pilha_especifica(lista_produtos, nome_produto, erro);
         if (pilha_vazia(pilha_aux))
         {
-            printf("Nenhum lance para este produto!\n");
+            printf("nenhum lance para este produto!\n");
             continue;
         }
         copiar_pilha(pilha_aux, &pilha_copia, erro);
