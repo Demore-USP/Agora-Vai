@@ -1,10 +1,10 @@
 #ifndef LISTAPRODUTO_H
 #define LISTAPRODUTO_H
 
-#include "pilhalances.h"
-#include "fila.h"
-#include "produto.h"
+#include "PilhaLances.h"
+#include "Fila.h"
 #include "ListaUsuario.h"
+#include "Lista.h"
 
 // Erros:
 // 1- Erro ao alocar memória

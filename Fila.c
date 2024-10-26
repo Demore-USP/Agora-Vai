@@ -1,7 +1,7 @@
-#include "Fila.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "Fila.h"
 
 // Função que inicializa a fila
 void inicializar_fila(Fila *F)

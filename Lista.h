@@ -1,8 +1,6 @@
 #ifndef LISTA_H
 #define LISTA_H
 
-#include "produto.h"
-
 typedef struct no_lista {
     char **ponteiro_produto;
     struct no_lista *prox;

@@ -4,10 +4,9 @@
 #include "ListaProduto.h"
 #include "Lista.h"
 
-
 // Struct que armazena o nome do usuario e os produtos em que ele deu lance 
 typedef struct no_usuario {
-    usuario nome_usuario;
+    char *nome_usuario;
     Lista produtos;
     struct no_usuario *prox;
 } No_Usuario;

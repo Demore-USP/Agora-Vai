@@ -2,10 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "ListaProduto.h"
-#include "produto.h"
 #include "PilhaLances.h"
 #include "ListaUsuario.h"
-#include "usuario.h"
 #include "Fila.h"
 #include "Lista.h"
 
