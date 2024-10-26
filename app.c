@@ -1,16 +1,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "ListaProduto.h"
+#include "ListaUsuario.h"
+#include "PilhaLances.h"
+#include "Fila.h"
+#include "Lista.h"
 
-void cadastrar_produto(Lista_produto *lista_produtos, int *erro);
-void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, int *erro);
-void dar_lance(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *erro);
-void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro);
-void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro);
+void cadastrar_produto(Lista_Produto *lista_produtos, int *qtd_produtos, int *erro);
+void listar_produtos_lances(Lista_Produto *lista_produtos, int *qtd_produtos, int *erro);
+void dar_lance(Lista_Produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *erro);
+void recomendar_produtos(Lista_Produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro);
+void encerrar_leilao(Lista_Produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro);
 
 int main() {
 
-    Lista_produto lista_produtos;
+    Lista_Produto lista_produtos;
     Lista_usuario lista_usuarios;
     int erro = 0, opcao = 0, qtd_produtos = 0, qtd_usuarios = 0;
 
@@ -31,7 +36,7 @@ int main() {
         scanf("%d", &opcao);
 
         if (opcao == 1) {
-            cadastrar_produto(&lista_produtos, &erro);
+            cadastrar_produto(&lista_produtos, &qtd_produtos, &erro);
 
         } else if (opcao == 2) {
             listar_produtos_lances(&lista_produtos, &qtd_produtos, &erro);
@@ -59,7 +64,7 @@ int main() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void cadastrar_produto(Lista_produto *lista_produtos, int *qtd_produtos, int *erro) {
+void cadastrar_produto(Lista_Produto *lista_produtos, int *qtd_produtos, int *erro) {
     char nome_produto[100];
     printf("\nEntre com o nome do produto: ");
     scanf("%s", nome_produto);
@@ -75,7 +80,7 @@ void cadastrar_produto(Lista_produto *lista_produtos, int *qtd_produtos, int *er
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void dar_lance(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *erro) {
+void dar_lance(Lista_Produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *erro) {
     char nome_usuario[100], nome_produto[100];
     float valor;
 
@@ -100,7 +105,7 @@ void dar_lance(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, int *erro) {
+void listar_produtos_lances(Lista_Produto *lista_produtos, int *qtd_produtos, int *erro) {
     // Declarações
     char *nome_produto;
     float valor;
@@ -164,20 +169,20 @@ void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, in
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro) {
+void recomendar_produtos(Lista_Produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro) {
     char *nome_usuario, **nome_produto1, *nome_produto2;
     int tam, flag1, flag2 = 0;
-    Lista *lista_produtos_usuario;
+    Lista lista_produtos_usuario;
     inicializar_lista(&lista_produtos_usuario);
 
     for(int i = 0; i < (*qtd_usuarios); i++) {
         nome_usuario = devolver_nome_usuario(lista_usuarios, i, erro);
         lista_produtos_usuario = devolver_lista_produtos(lista_usuarios, nome_usuario, erro);
-        tam = tamanho_lista(lista_produtos_usuario);
+        tam = tamanho_lista(&lista_produtos_usuario);
         flag1 = 0;
 
         for(int j = 0; j < tam; j++) {
-            *nome_produto1 = devolver_produto(lista_produtos_usuario, j, erro); // Devolver a tring de fato, derreferenciado
+            *nome_produto1 = devolver_produto(&lista_produtos_usuario, j, erro); // Devolver a string de fato, derreferenciado
             if(vencedor_produto(lista_produtos, *nome_produto1, nome_usuario)) 
                 continue;
             else {
@@ -193,7 +198,7 @@ void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usu
             flag2 = 0;
 
             for(int k = 0; k < tam; k++) {
-                *nome_produto1 = devolver_produto(lista_produtos_usuario, k, erro);
+                *nome_produto1 = devolver_produto(&lista_produtos_usuario, k, erro);
                 if(strcmp(*nome_produto1, nome_produto2) == 0) {
                     flag2 = 1;
                     break;
@@ -207,7 +212,7 @@ void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usu
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro){
+void encerrar_leilao(Lista_Produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro){
     char *nome_produto;
     char *vencedor;
     float valor;

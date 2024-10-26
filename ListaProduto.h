@@ -3,10 +3,11 @@
 
 #include "pilhalances.h"
 #include "fila.h"
+#include "produto.h"
 
 // Struct que armazena o produto, com seus respectivos lances
 typedef struct no_lista {
-    char *produto;
+    produto nome_produto;
     Pilha lances;
     struct no_lista *prox;
 } No_ListaProduto;
