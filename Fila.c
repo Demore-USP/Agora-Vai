@@ -60,7 +60,7 @@ int esta_na_fila(Fila *F, char *nome, int *erro) {
 }
 
 // Função que remove o primeiro usuário da fila e devolve seu nome
-char *remover_fila(Fila *F, int *erro) {
+char *remover_da_fila(Fila *F, int *erro) {
     if (fila_vazia(F)) {
         *erro = 1;
         return NULL;

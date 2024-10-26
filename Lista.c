@@ -12,7 +12,7 @@ int lista_vazia(Lista *L) {
     return (L->inicio == NULL);
 }
 
-void inserir_produto_no_usuario(Lista *L, char **nome_produto, int *erro) {
+void inserir_produto_no_usuario(Lista *L, produto *nome_produto, int *erro) {
   No_Lista *novo = (No_Lista *)malloc(sizeof(No_Lista)); // Aloca memória para um novo Nó
     if (novo == NULL) {
         *erro = 1;

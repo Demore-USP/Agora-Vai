@@ -15,7 +15,7 @@ typedef struct {
 
 void inicializar_lista(Lista *);
 int lista_vazia(Lista *);
-void inserir_produto_no_usuario(Lista *, char **, int *);
+void inserir_produto_no_usuario(Lista *, produto *, int *);
 int tamanho_lista(Lista *);
 char *devolver_produto(Lista *, int, int *);
 void excluir_lista(Lista *, int *);

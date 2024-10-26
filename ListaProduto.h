@@ -16,7 +16,7 @@
 typedef struct no {
     produto nome_produto;
     Pilha lances;
-    struct no_lista *prox;
+    struct no *prox;
 } No_ListaProduto;
 
 // Ponteiros de início e fim da lista de produtos

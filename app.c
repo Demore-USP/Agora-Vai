@@ -84,7 +84,7 @@ int main() {
         }
     }
 
-    printf("Leilão encerrado!")
+    printf("Leilão encerrado!");
     return 0;
 }
 

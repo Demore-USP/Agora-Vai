@@ -15,7 +15,7 @@ void inicializar_lista_produto(Lista_produto *L){
 }
 
 void inserir_lista_produto(Lista_produto *L, char *nome_produto, int *erro) {
-    No_ListaProduto *novo = (No_Lista *)malloc(sizeof(No_Lista)); // Aloca memória para um novo Nó
+    No_ListaProduto *novo = (No_ListaProduto*)malloc(sizeof(No_ListaProduto)); // Aloca memória para um novo Nó
     if (novo == NULL) {
         *erro = 1;
         return; // Caso a alocação falhe, retorna e o erro é atualizado
@@ -89,12 +89,12 @@ void inserir_lance_produto(Lista_produto *LP, Lista_usuario *LU, char *nome_usua
         return;
     }
     if (*valor == topo) {
-        inserir_na_fila(&aux->lances.topo->fila_usuarios, *nome_usuario, erro);
+        inserir_na_fila(&aux->lances.topo->fila_usuarios, &nome_usuario, erro);
     }
     else {
         empilhar(&aux->lances, *valor, erro);
         inicializar_fila(&aux->lances.topo->fila_usuarios);
-        inserir_na_fila(&aux->lances.topo->fila_usuarios, *nome_usuario, erro);
+        inserir_na_fila(&aux->lances.topo->fila_usuarios, &nome_usuario, erro);
     }
 
     *erro = 0;
@@ -140,7 +140,7 @@ int vencedor_produto(Lista_produto *LP, char *nome_produto, char *nome_usuario) 
     return 0;
 }
 
-excluir_lista_produto(Lista_produto *L, int *erro) {
+void excluir_lista_produto(Lista_produto *L, int *erro) {
     No_ListaProduto *aux = L->ini;
     No_ListaProduto *temp = NULL;
     

@@ -58,7 +58,7 @@ void inserir_lista_usuario(Lista_usuario *L, char *nome_usuario, char *nome_prod
 
     inicializar_lista(&novo->produtos); // Inicializa a lista de produtos para este usuário
 
-    inserir_produto_no_usuario(L, &nome_produto, erro); // Insere o endereço do nome do produto na lista de produtos deste novo usuario
+    inserir_produto_no_usuario(&novo->produtos, &nome_produto, erro); // Insere o endereço do nome do produto na lista de produtos deste novo usuario
 
     novo->prox = NULL; // Seta o ponteiro para nulo, até encontrar a posição correta
 
