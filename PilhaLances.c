@@ -50,6 +50,29 @@ float desempilhar(Pilha *P, int *erro) {
     return valor;
 }
 
-void copiar_pilha(Pilha *PO, Pilha *PC, int *erro);
+void copiar_pilha(Pilha *PO, Pilha *PC, int *erro){
+    if (pilha_vazia(PO)) {
+        *erro = 1;
+        return; // Caso a pilha original esteja vazia, retorna e o erro é atualizado
+    }
+
+    // Inicializa a pilha copiada
+    inicializar_pilha(PC);
+
+    // Variável auxiliar para percorrer a pilha original
+    No_Pilha *aux = PO->topo;
+
+    // Variável para armazenar o valor do lance
+    float valor;
+
+    // Copia os valores da pilha original para a pilha copiada
+    while (aux != NULL) {
+        valor = aux->valor;
+        empilhar(PC, valor, erro);
+        aux = aux->prox;
+    }
+
+    *erro = 0;
+}
 
 void excluir_pilha(Pilha *P, int *erro);
