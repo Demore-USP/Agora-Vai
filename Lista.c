@@ -12,7 +12,7 @@ int lista_vazia(Lista *L) {
     return (L->inicio == NULL);
 }
 
-void inserir_produto_no_usuario(Lista *L, produto *nome_produto, int *erro) {
+void inserir_produto_no_usuario(Lista *L, char *nome_produto, int *erro) {
   No_Lista *novo = (No_Lista *)malloc(sizeof(No_Lista)); // Aloca memória para um novo Nó
     if (novo == NULL) {
         *erro = 1;
@@ -20,7 +20,7 @@ void inserir_produto_no_usuario(Lista *L, produto *nome_produto, int *erro) {
     }
 
     // Faz o ponteiro da lista de ponteiros para produtos apontar para o produto a ser inserido na lista de produtos do usuario
-    novo->ponteiro_produto = nome_produto;
+    novo->ponteiro_produto->nome = nome_produto;
 
     novo->prox = NULL; // Ajusta o ponteiro
 
@@ -30,7 +30,7 @@ void inserir_produto_no_usuario(Lista *L, produto *nome_produto, int *erro) {
     // Compara o nome a inserir com os outros da lista
     // Caso a lista já tenha o nome, não insere e libera a memória
     while (aux != NULL) {
-        if (aux->ponteiro_produto == nome_produto) { 
+        if (aux->ponteiro_produto->nome == nome_produto) { 
             *erro = 3;  
             free(novo); 
             return;

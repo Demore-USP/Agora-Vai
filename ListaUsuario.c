@@ -58,7 +58,7 @@ void inserir_lista_usuario(Lista_usuario *L, char *nome_usuario, char *nome_prod
 
     inicializar_lista(&novo->produtos); // Inicializa a lista de produtos para este usuário
 
-    inserir_produto_no_usuario(&novo->produtos, &nome_produto, erro); // Insere o endereço do nome do produto na lista de produtos deste novo usuario
+    inserir_produto_no_usuario(&novo->produtos, nome_produto, erro); // Insere o endereço do nome do produto na lista de produtos deste novo usuario
 
     novo->prox = NULL; // Seta o ponteiro para nulo, até encontrar a posição correta
 
@@ -91,7 +91,7 @@ char *devolver_nome_usuario(Lista_usuario *L, int indice, int *erro)
         return aux->nome_usuario.nome;
     }
     *erro = 1;
-    return;
+    return NULL;
 }
 
 Lista devolver_lista_produtos(Lista_usuario *L, char *nome_usuario, int *erro) {
@@ -106,12 +106,12 @@ Lista devolver_lista_produtos(Lista_usuario *L, char *nome_usuario, int *erro) {
     }
     
     *erro = 1;
-    return;
+    return aux->produtos;
 }
 
 void excluir_lista_usuario(Lista_usuario *L, int *erro)
 {
-    if (lista_vazia(L)) {
+    if (lista_usuario_vazia(L)) {
         *erro = 1;
         return; // Caso a lista esteja vazia, atualiza o erro e retorna
     }
@@ -123,7 +123,7 @@ void excluir_lista_usuario(Lista_usuario *L, int *erro)
     // Percorre a lista e libera cada nó
     while (aux != NULL) {
         temp = aux; // Guarda o nó atual para liberar
-        excluir_lista(aux, erro);
+        excluir_lista(&aux->produtos, erro);
         aux = aux->prox; // Avança para o próximo nó
         free(temp->nome_usuario.nome); // Libera o nome
         free(temp); // Libera o nó atual

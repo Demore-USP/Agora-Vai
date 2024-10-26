@@ -170,16 +170,16 @@ void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, in
             num = tamanho_fila(&fila_copia);
             printf("%d lances de R$%.2f: ", num, valor);
             for(int j = 0; j < num; j++) {
-                if(j < num-1)
+                if (j < num-1) {
                     printf("%s, ", remover_da_fila(&fila_copia, erro));
-                    if (*erro != 0)
-                        {
+                    if (*erro != 0) {
                             free(nome_produto);
                             excluir_fila(&fila_copia, erro);
                             excluir_pilha(&pilha_copia, erro);
                             return; // Retorna se houver erro ao remover da fila
                         }
-                else 
+                }
+                else {
                     printf("%s\n", remover_da_fila(&fila_copia, erro));
                     if (*erro != 0)
                         {
@@ -188,6 +188,7 @@ void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, in
                             excluir_pilha(&pilha_copia, erro);
                             return; // Retorna se houver erro ao remover da fila
                         }
+                }
             }
         }
     }
@@ -201,7 +202,7 @@ void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, in
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro) {
-    char *nome_usuario, **nome_produto1, *nome_produto2;
+    char *nome_usuario, *nome_produto1, *nome_produto2;
     int tam, flag1, flag2 = 0;
     Lista lista_produtos_usuario;
     inicializar_lista(&lista_produtos_usuario);
@@ -213,8 +214,8 @@ void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usu
         flag1 = 0;
 
         for(int j = 0; j < tam; j++) {
-            *nome_produto1 = devolver_produto(&lista_produtos_usuario, j, erro); // Devolver a string de fato, derreferenciado
-            if(vencedor_produto(lista_produtos, *nome_produto1, nome_usuario)) 
+            nome_produto1 = devolver_produto(&lista_produtos_usuario, j, erro); // Devolver a string de fato, derreferenciado
+            if(vencedor_produto(lista_produtos, nome_produto1, nome_usuario)) 
                 continue;
             else {
                 flag1 = 1;
@@ -229,8 +230,8 @@ void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usu
             flag2 = 0;
 
             for(int k = 0; k < tam; k++) {
-                *nome_produto1 = devolver_produto(&lista_produtos_usuario, k, erro);
-                if(strcmp(*nome_produto1, nome_produto2) == 0) {
+                nome_produto1 = devolver_produto(&lista_produtos_usuario, k, erro);
+                if(strcmp(nome_produto1, nome_produto2) == 0) {
                     flag2 = 1;
                     break;
                 }
@@ -248,12 +249,10 @@ void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuario
     char *vencedor;
     float valor;
     Pilha *pilha_aux;
-    inicializar_pilha(pilha_aux);
-
     Fila fila_aux;
     inicializar_fila(&fila_aux);
 
-    for(int i = 0; i < qtd_produtos; i++) {
+    for(int i = 0; i < *qtd_produtos; i++) {
         nome_produto = devolver_nome_produto(lista_produtos, i, erro);
         printf("%s: ", nome_produto);
         pilha_aux = pilha_especifica(lista_produtos, nome_produto, erro);

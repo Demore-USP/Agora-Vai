@@ -20,6 +20,7 @@ typedef struct Lista_usuario {
 } Lista_usuario;
 
 void inicializar_lista_usuario(Lista_usuario *);
+int lista_usuario_vazia(Lista_usuario *);
 int esta_na_lista_usuario(Lista_usuario *, char *);
 int lista_usuario_vazia(Lista_usuario *);
 void inserir_lista_usuario(Lista_usuario *, char *, char*, int *);

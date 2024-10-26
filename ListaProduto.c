@@ -89,12 +89,12 @@ void inserir_lance_produto(Lista_produto *LP, Lista_usuario *LU, char *nome_usua
         return;
     }
     if (*valor == topo) {
-        inserir_na_fila(&aux->lances.topo->fila_usuarios, &nome_usuario, erro);
+        inserir_na_fila(&aux->lances.topo->fila_usuarios, nome_usuario, erro);
     }
     else {
         empilhar(&aux->lances, *valor, erro);
         inicializar_fila(&aux->lances.topo->fila_usuarios);
-        inserir_na_fila(&aux->lances.topo->fila_usuarios, &nome_usuario, erro);
+        inserir_na_fila(&aux->lances.topo->fila_usuarios, nome_usuario, erro);
     }
 
     *erro = 0;
@@ -118,7 +118,7 @@ Pilha *pilha_especifica(Lista_produto *LP, char *nome_produto, int *erro)
     }
     if (aux == NULL) {
         *erro = 2;
-        return;
+        return NULL;
     }
     return &aux->lances;
 }

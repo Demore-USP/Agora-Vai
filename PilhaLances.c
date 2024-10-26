@@ -85,19 +85,22 @@ void copiar_pilha(Pilha *PO, Pilha *PC, int *erro){
 }
 
 Fila fila_especifica(Pilha *P, float valor, int *erro) {
-    Pilha *aux;
+    Pilha aux;
     Fila temp;
-    copiar_pilha(P, aux, erro);
-    while(pilha_vazia(aux)) {
-        if(valor == retorna_topo_pilha(aux, erro)) {
-            temp = aux->topo->fila_usuarios;
-            if(!pilha_vazia(aux)) {
-                excluir_pilha(aux, erro);
+    copiar_pilha(P, &aux, erro);
+    while(pilha_vazia(&aux)) {
+        if(valor == retorna_topo_pilha(&aux, erro)) {
+            temp = aux.topo->fila_usuarios;
+            if(!pilha_vazia(&aux)) {
+                excluir_pilha(&aux, erro);
             }
             return temp;
         }
-        desempilhar(aux, erro);
+        desempilhar(&aux, erro);
     }
+
+    *erro = 1;
+    return temp;
 }
 
 void excluir_pilha(Pilha *P, int *erro) {

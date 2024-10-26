@@ -15,14 +15,14 @@ int fila_vazia(Fila *F) {
     return (F->inicio == NULL);
 }
 
-void inserir_na_fila(Fila *F, usuario *nome_usuario, int *erro) {
+void inserir_na_fila(Fila *F, char *nome_usuario, int *erro) {
     No_fila *novo = (No_fila *)malloc(sizeof(No_fila)); // Aloca memória para um novo Nó
     if (novo == NULL) {
         *erro = 1;
         return; // Caso a alocação falhe, retorna e o erro é atualizado
     }
 
-    novo->ponteiro_usuario = nome_usuario; //o ponteiro para o nome do usuario aponta para o endereço do nome
+    novo->ponteiro_usuario->nome = nome_usuario; //o ponteiro para o nome do usuario aponta para o endereço do nome
 
     novo->prox = NULL; // Sempre aponta para NULL, pois sempre é inserido no fim
 
@@ -119,7 +119,7 @@ void copiar_fila(Fila *fila_origem, Fila *fila_destino, int *erro) {
 
     // Percorre a fila original e copia os elementos para a fila destino
     while (no_aux != NULL) {
-        inserir_na_fila(fila_destino, no_aux->ponteiro_usuario, erro);
+        inserir_na_fila(fila_destino, no_aux->ponteiro_usuario->nome, erro);
         if (*erro) {
             *erro = 3;
             return; // Verifica se houve erro na alocação 
