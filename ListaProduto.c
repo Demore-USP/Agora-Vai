@@ -74,6 +74,7 @@ void inserir_lista_produto(Lista_produto *L, char *nome_produto, int *erro) {
 
 void inserir_lance_produto(Lista_produto *LP, Lista_usuario *LU, char *nome_usuario, float *valor, char *nome_produto, int *erro) {
     No_ListaProduto *aux = LP->ini;
+    Lista temp;
     float topo;
     while (aux != NULL && (strcmp(aux->nome_produto.nome, nome_produto)) != 0) {
         aux = aux->prox;
@@ -81,6 +82,15 @@ void inserir_lance_produto(Lista_produto *LP, Lista_usuario *LU, char *nome_usua
     if (aux == NULL) {
         *erro = 2;
         return;
+    }
+
+    if (!esta_na_lista_usuario(LU, nome_usuario)) { //se o usuario não esta na lista insere ele na lista e o produto na lista dele
+        inserir_lista_usuario(LU, nome_usuario, nome_produto, erro);
+    }
+
+    else {
+        temp = devolver_lista_produtos(LU, nome_usuario, erro); //se estiver, insere apenas o produto
+        inserir_produto_no_usuario(&temp, nome_usuario, erro);
     }
 
     topo = retorna_topo_pilha(&aux->lances, erro);

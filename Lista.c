@@ -13,12 +13,13 @@ int lista_vazia(Lista *L) {
 }
 
 void inserir_produto_no_usuario(Lista *L, char *nome_produto, int *erro) {
-  No_Lista *novo = (No_Lista *)malloc(sizeof(No_Lista)); // Aloca memória para um novo Nó
+    
+    No_Lista *novo = (No_Lista *)malloc(sizeof(No_Lista)); // Aloca memória para um novo Nó
     if (novo == NULL) {
         *erro = 1;
         return; // Caso a alocação falhe, retorna e o erro é atualizado
     }
-
+    
     // Faz o ponteiro da lista de ponteiros para produtos apontar para o produto a ser inserido na lista de produtos do usuario
     novo->ponteiro_produto->nome = nome_produto;
 
@@ -60,6 +61,7 @@ int tamanho_lista(Lista *L) {
 
     return contador;
 }
+
 
 char *devolver_produto(Lista *L, int indice, int *erro) {
     No_Lista *aux = L->inicio;
