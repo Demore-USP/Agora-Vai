@@ -118,6 +118,7 @@ void listar_produtos_lances(Lista_Produto *lista_produtos, int *qtd_produtos, in
     Fila fila_copia;
     inicializar_fila(&fila_copia);
     Pilha *pilha_aux;
+    Fila fila_aux;
 
     for(int i=0; i<qtd_produtos; i++){
         nome_produto = devolver_nome_produto(lista_produtos, i, erro);
@@ -135,7 +136,8 @@ void listar_produtos_lances(Lista_Produto *lista_produtos, int *qtd_produtos, in
                 excluir_pilha(&pilha_copia, erro);
                 return;
             }
-            copiar_fila(fila_especifica(pilha_aux, valor, erro), &fila_copia, erro);
+            fila_aux = fila_especifica(pilha_aux, valor, erro);
+            copiar_fila(&fila_aux, &fila_copia, erro);
             num = tamanho_fila(fila_copia, erro);
             printf("%d lances de R$%.2f: ", num, valor);
             for(int j = 0; j < num; j++) {
@@ -219,7 +221,8 @@ void encerrar_leilao(Lista_Produto *lista_produtos, Lista_usuario *lista_usuario
     Pilha *pilha_aux;
     inicializar_pilha(pilha_aux);
 
-    Fila *fila_aux;
+    Fila fila_aux;
+    inicializar_fila(&fila_aux);
 
     for(int i = 0; i < qtd_produtos; i++) {
         nome_produto = devolver_nome_produto(lista_produtos, i, erro);
