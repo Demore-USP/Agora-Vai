@@ -118,7 +118,7 @@ void copiar_pilha(Pilha *PO, Pilha *PC, int *erro)
 Fila fila_especifica(Pilha *P, float valor, int *erro)
 {
     Pilha aux;
-    Fila temp;
+    Fila temp = {NULL, NULL};
     inicializar_fila(&temp); // Inicializa 'temp' corretamente
 
     inicializar_pilha(&aux);
@@ -170,7 +170,7 @@ void excluir_pilha(Pilha *P, int *erro)
     // Percorre a pilha e libera cada nó
     while (atual != NULL)
     {
-        excluir_fila(&P->topo->fila_usuarios, erro);
+        //excluir_fila(&P->topo->fila_usuarios, erro);
         temp = atual;        // Guarda o nó atual para liberar
         atual = atual->prox; // Avança para o próximo nó
         free(temp);          // Libera o nó
