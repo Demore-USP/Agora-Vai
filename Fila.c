@@ -99,7 +99,7 @@ char *remover_da_fila(Fila *F, int *erro)
     {
         F->fim = NULL; // Se a fila ficar vazia, atualiza o 'fim'
     }
-
+    free(aux->ponteiro_usuario);
     free(aux); // Libera o nó
 
     *erro = 0; // Setando o erro
@@ -129,8 +129,7 @@ int tamanho_fila(Fila *F)
     return tamanho;
 }
 
-void copiar_fila(Fila *fila_origem, Fila *fila_destino, int *erro)
-{
+void copiar_fila(Fila *fila_origem, Fila *fila_destino, int *erro) {
     if (fila_vazia(fila_origem))
     {
         *erro = 1;
@@ -176,9 +175,9 @@ void excluir_fila(Fila *F, int *erro)
     {
         temp = aux;      // Guarda o nó atual para liberar
         aux = aux->prox; // Avança para o próximo nó
-        if (temp->ponteiro_usuario != NULL)
+        if (temp->ponteiro_usuario != NULL) 
         {
-            free(temp->ponteiro_usuario); // Libera o ponteiro para usuario se foi alocado dinamicamente
+            free(temp->ponteiro_usuario);  // Libera o ponteiro para usuario 
         }
         free(temp); // Libera o nó
     }

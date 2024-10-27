@@ -47,6 +47,7 @@ void inserir_produto_no_usuario(Lista *L, char *nome_produto, int *erro)
         if (strcmp(aux->ponteiro_produto->nome, nome_produto) == 0)
         {
             *erro = 3;
+            free(novo->ponteiro_produto);
             free(novo);
             return;
         }
@@ -111,7 +112,7 @@ void excluir_lista(Lista *L, int *erro)
         temp = aux;      // Guarda o nó atual para liberar
         aux = aux->prox; // Avança para o próximo nó
         free(temp->ponteiro_produto);
-        free(temp);      // Libera o nó atual
+        free(temp); // Libera o nó atual
     }
 
     // Ajustando os ponteiros

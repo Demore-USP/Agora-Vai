@@ -187,6 +187,7 @@ void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, in
 
             fila_aux = fila_especifica(pilha_aux, valor, erro);
             copiar_fila(&fila_aux, &fila_copia, erro);
+            excluir_fila(&fila_aux, erro);
             num = tamanho_fila(&fila_copia);
             printf("%d lances de R$%.2f: ", num, valor);
             for (int j = 0; j < num; j++)
@@ -295,6 +296,7 @@ void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuario
         if (!fila_vazia(&fila_aux))
         {
             vencedor = retorna_inicio_fila(fila_aux, erro);
+            excluir_fila(&fila_aux, erro);
             printf("%s comprou por R$%.2f\n", vencedor, valor);
         }
     }
