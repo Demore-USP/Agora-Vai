@@ -229,29 +229,30 @@ void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usu
 {
     char *nome_usuario, *nome_produto1, *nome_produto2;
     int tam, flag1, flag2 = 0;
-    Lista lista_produtos_usuario;
-    inicializar_lista(&lista_produtos_usuario);
+    Lista *lista_produtos_usuario = NULL;
 
     for (int i = 0; i < (*qtd_usuarios); i++)
     {
+        // inicializar_lista(lista_produtos_usuario);
         nome_usuario = devolver_nome_usuario(lista_usuarios, i, erro);
         lista_produtos_usuario = devolver_lista_produtos(lista_usuarios, nome_usuario, erro);
-        tam = tamanho_lista(&lista_produtos_usuario);
+        tam = tamanho_lista(lista_produtos_usuario);
+        printf("%s : %d\n", nome_usuario, tam);
         flag1 = 0;
 
         for (int j = 0; j < tam; j++)
         {
-            nome_produto1 = devolver_produto(&lista_produtos_usuario, j, erro); // Devolver a string de fato, derreferenciado
-            if (vencedor_produto(lista_produtos, nome_produto1, nome_usuario))
-                continue;
-            else
+            nome_produto1 = devolver_produto(lista_produtos_usuario, j, erro); // Devolver a string de fato, derreferenciado
+            if (!vencedor_produto(lista_produtos, nome_produto1, nome_usuario))
             {
                 flag1 = 1;
                 break;
             }
         }
-        if (flag1 == 0)
+
+        if (flag1 == 0 || tam == *qtd_produtos)
             continue;
+
         printf("Para %s: não gostaria de dar um lance por:\n", nome_usuario);
         for (int j = 0; j < (*qtd_produtos); j++)
         {
@@ -260,7 +261,7 @@ void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usu
 
             for (int k = 0; k < tam; k++)
             {
-                nome_produto1 = devolver_produto(&lista_produtos_usuario, k, erro);
+                nome_produto1 = devolver_produto(lista_produtos_usuario, k, erro);
                 if (strcmp(nome_produto1, nome_produto2) == 0)
                 {
                     flag2 = 1;

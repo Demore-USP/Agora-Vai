@@ -27,7 +27,7 @@ int lista_usuario_vazia(Lista_usuario *);
 void inserir_lista_usuario(Lista_usuario *, char *, char *, int *);
 No_Usuario *comparar_nomes(Lista_usuario *, char *, int *);
 char *devolver_nome_usuario(Lista_usuario *, int, int *);
-Lista devolver_lista_produtos(Lista_usuario *, char *, int *);
+Lista *devolver_lista_produtos(Lista_usuario *, char *, int *);
 void excluir_lista_usuario(Lista_usuario *, int *);
 
 #endif

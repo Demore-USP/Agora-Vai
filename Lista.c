@@ -16,7 +16,6 @@ int lista_vazia(Lista *L)
 
 void inserir_produto_no_usuario(Lista *L, char *nome_produto, int *erro)
 {
-
     No_Lista *novo = (No_Lista *)malloc(sizeof(No_Lista)); // Aloca memória para um novo Nó
     if (novo == NULL)
     {
@@ -45,7 +44,7 @@ void inserir_produto_no_usuario(Lista *L, char *nome_produto, int *erro)
     // Caso a lista já tenha o nome, não insere e libera a memória
     while (aux != NULL)
     {
-        if (aux->ponteiro_produto->nome == nome_produto)
+        if (strcmp(aux->ponteiro_produto->nome, nome_produto) == 0)
         {
             *erro = 3;
             free(novo);

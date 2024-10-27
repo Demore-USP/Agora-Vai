@@ -99,7 +99,7 @@ char *devolver_nome_usuario(Lista_usuario *L, int indice, int *erro)
     return NULL;
 }
 
-Lista devolver_lista_produtos(Lista_usuario *L, char *nome_usuario, int *erro)
+Lista *devolver_lista_produtos(Lista_usuario *L, char *nome_usuario, int *erro)
 {
     No_Usuario *aux = L->inicio;
 
@@ -108,13 +108,13 @@ Lista devolver_lista_produtos(Lista_usuario *L, char *nome_usuario, int *erro)
         if (strcmp(aux->nome_usuario.nome, nome_usuario) == 0)
         {
             *erro = 0;
-            return aux->produtos;
+            return &aux->produtos;
         }
         aux = aux->prox;
     }
 
     *erro = 1;
-    return aux->produtos;
+    return &aux->produtos;
 }
 
 void excluir_lista_usuario(Lista_usuario *L, int *erro)

@@ -86,7 +86,7 @@ void inserir_lance_produto(Lista_produto *LP, Lista_usuario *LU, char *nome_usua
 {
     No_ListaProduto *aux = LP->ini;
     No_Usuario *aux2 = NULL;
-    Lista temp;
+    Lista *temp = NULL;
     float topo;
     char *nome;
 
@@ -111,11 +111,10 @@ void inserir_lance_produto(Lista_produto *LP, Lista_usuario *LU, char *nome_usua
         strcpy(nome, nome_usuario);
         inserir_lista_usuario(LU, nome, aux->nome_produto.nome, erro);
     }
-
     else
     {
         temp = devolver_lista_produtos(LU, nome_usuario, erro); // se estiver, insere apenas o produto
-        inserir_produto_no_usuario(&temp, nome_produto, erro);
+        inserir_produto_no_usuario(temp, aux->nome_produto.nome, erro);
     }
 
     topo = retorna_topo_pilha(&aux->lances, erro);
