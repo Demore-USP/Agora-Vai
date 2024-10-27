@@ -3,19 +3,21 @@
 
 #include "usuario.h"
 
-// Struct que armazena um ponteiro pra ponteiro com o nome dos usuarios encadeados
+// Struct onde cada nó armazena um ponteiro para um usuário 
 typedef struct no_fila
 {
-    usuario *ponteiro_usuario;
+    usuario *ponteiro_usuario; // Ponteiro para a struct usuário (que contém o nome)
     struct no_fila *prox;
 } No_fila;
 
+// Ponteiros de início e fim da fila
 typedef struct Fila
 {
     No_fila *inicio;
     No_fila *fim;
 } Fila;
 
+// Protótipos das funções utilizadas
 void inicializar_fila(Fila *);
 int fila_vazia(Fila *);
 void inserir_na_fila(Fila *, char *, int *);

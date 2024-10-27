@@ -28,6 +28,7 @@ void inserir_na_fila(Fila *F, char *nome_usuario, int *erro)
 
     // Alocar memória para ponteiro_produto dentro de novo
     novo->ponteiro_usuario = (usuario *)malloc(sizeof(usuario));
+
     if (novo->ponteiro_usuario == NULL)
     {
         *erro = 1;
@@ -175,7 +176,11 @@ void excluir_fila(Fila *F, int *erro)
     {
         temp = aux;      // Guarda o nó atual para liberar
         aux = aux->prox; // Avança para o próximo nó
-        free(temp);      // Libera o nó
+        if (temp->ponteiro_usuario != NULL)
+        {
+            free(temp->ponteiro_usuario); // Libera o ponteiro para usuario se foi alocado dinamicamente
+        }
+        free(temp); // Libera o nó
     }
 
     // Ajustando os ponteiros

@@ -68,6 +68,14 @@ void inserir_lista_usuario(Lista_usuario *L, char *nome_usuario, char *nome_prod
     *erro = 0;     // Define erro como 0 (sem erro)
 }
 
+No_Usuario *comparar_nomes(Lista_usuario *L, char *nome_usuario, int *erro) {
+    No_Usuario *aux = L->inicio;
+    while(aux != NULL && strcmp(aux->nome_usuario.nome, nome_usuario) != 0) {
+        aux = aux->prox;
+    }
+    return aux;
+}
+
 char *devolver_nome_usuario(Lista_usuario *L, int indice, int *erro)
 {
     No_Usuario *aux = L->inicio;

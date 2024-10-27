@@ -182,6 +182,7 @@ void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, in
                 excluir_pilha(&pilha_copia, erro);
                 return;
             }
+
             fila_aux = fila_especifica(pilha_aux, valor, erro);
             copiar_fila(&fila_aux, &fila_copia, erro);
             num = tamanho_fila(&fila_copia);

@@ -12,10 +12,13 @@
 // 3- Produto já existente
 // 4- Lance não válido
 
-// Struct que armazena o produto, com seus respectivos lances
+// Struct que armazena o nome do produto, 
+// com os lances dados nele
 typedef struct no
 {
-    produto nome_produto;
+    // Declaração da struct produto em si (contém o nome de fato e não um ponteiro)
+    produto nome_produto; 
+    // Declaração da pilha lances  
     Pilha lances;
     struct no *prox;
 } No_ListaProduto;
@@ -27,6 +30,7 @@ typedef struct Lista_produto
     No_ListaProduto *fim;
 } Lista_produto;
 
+// Protótipos das funções utilizadas
 void inicializar_lista_produto(Lista_produto *);
 void inserir_lista_produto(Lista_produto *, char *, int *);
 void inserir_lance_produto(Lista_produto *, Lista_usuario *, char *, float *, char *, int *);

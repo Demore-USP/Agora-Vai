@@ -3,11 +3,12 @@
 
 #include "Fila.h"
 
-// Struct que armazena o valor do lance e a fila de usuarios que deram aquele lance
+// Struct que armazena um valor e uma fila de ponteiros 
+// para usuarios que deram aquele lance
 typedef struct no_pilha
 {
     float valor;
-    Fila fila_usuarios;
+    Fila fila_usuarios; // Fila de ponteiros para usuários
     struct no_pilha *prox;
 } No_Pilha;
 
@@ -17,6 +18,7 @@ typedef struct Pilha
     No_Pilha *topo;
 } Pilha;
 
+// Protótipo das funções utilizadas
 void inicializar_pilha(Pilha *);
 int pilha_vazia(Pilha *);
 void empilhar(Pilha *, Fila *, float, int *);

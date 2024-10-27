@@ -4,15 +4,15 @@
 #include "ListaProduto.h"
 #include "Lista.h"
 
-// Struct que armazena o nome do usuario e os produtos em que ele deu lance
+// Struct que armazena o nome do usuario e os produtos que ele deu lance
 typedef struct no_usuario
 {
     usuario nome_usuario;
-    Lista produtos;
+    Lista produtos; // Essa lista contém ponteiros para o nome dos produtos
     struct no_usuario *prox;
 } No_Usuario;
 
-// Ponteiros de inÃ­cio e fim da lista geral
+// Ponteiros de início e fim da lista geral
 typedef struct Lista_usuario
 {
     No_Usuario *inicio;
@@ -24,6 +24,7 @@ int lista_usuario_vazia(Lista_usuario *);
 int esta_na_lista_usuario(Lista_usuario *, char *);
 int lista_usuario_vazia(Lista_usuario *);
 void inserir_lista_usuario(Lista_usuario *, char *, char *, int *);
+No_Usuario *comparar_nomes(Lista_usuario *, char *, int *);
 char *devolver_nome_usuario(Lista_usuario *, int, int *);
 Lista devolver_lista_produtos(Lista_usuario *, char *, int *);
 void excluir_lista_usuario(Lista_usuario *, int *);

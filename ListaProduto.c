@@ -85,9 +85,11 @@ void inserir_lista_produto(Lista_produto *L, char *nome_produto, int *erro)
 void inserir_lance_produto(Lista_produto *LP, Lista_usuario *LU, char *nome_usuario, float *valor, char *nome_produto, int *erro)
 {
     No_ListaProduto *aux = LP->ini;
+    No_Usuario *aux2 = NULL;
     Lista temp;
     float topo;
     char *nome;
+
     while (aux != NULL && (strcmp(aux->nome_produto.nome, nome_produto)) != 0)
     {
         aux = aux->prox;
@@ -122,15 +124,17 @@ void inserir_lance_produto(Lista_produto *LP, Lista_usuario *LU, char *nome_usua
         *erro = 4;
         return;
     }
+
+    aux2 = comparar_nomes(LU, nome_usuario, erro);
+
     if (*valor == topo)
     {
-        inserir_na_fila(&aux->lances.topo->fila_usuarios, nome, erro); // Lu->fim n é necessariamente isso
+        inserir_na_fila(&aux->lances.topo->fila_usuarios, aux2->nome_usuario.nome, erro); // Lu->fim n é necessariamente isso
     }
     else
     {
         empilhar(&aux->lances, NULL, *valor, erro); // passa a fila como nulo pois ela sera criada
-        inicializar_fila(&aux->lances.topo->fila_usuarios);
-        inserir_na_fila(&aux->lances.topo->fila_usuarios, nome, erro);
+        inserir_na_fila(&aux->lances.topo->fila_usuarios, aux2->nome_usuario.nome, erro);
     }
 
     *erro = 0;
