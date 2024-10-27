@@ -71,7 +71,7 @@ int main()
         }
         else if (opcao == 3)
         {
-            dar_lance(&lista_produtos, &lista_usuarios, &qtd_usuarios, &erro);
+            dar_lance(&lista_produtos, &lista_usuarios, &qtd_usuarios, &erro); // a fila é feita e ela existe, n é problema em como cadastra a fila
         }
         else if (opcao == 4)
         {
@@ -165,11 +165,11 @@ void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, in
     for (int i = 0; i < *qtd_produtos; i++)
     {
         nome_produto = devolver_nome_produto(lista_produtos, i, erro);
-        printf("%s: ", nome_produto);
+        printf("%s ", nome_produto);
         pilha_aux = pilha_especifica(lista_produtos, nome_produto, erro);
         if (pilha_vazia(pilha_aux))
         {
-            printf("nenhum lance para este produto!\n");
+            printf("Nenhum lance para este produto!\n");
             continue;
         }
         copiar_pilha(pilha_aux, &pilha_copia, erro);
@@ -280,17 +280,19 @@ void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuario
     float valor;
     Pilha *pilha_aux;
     Fila fila_aux;
-    inicializar_fila(&fila_aux);
 
     for (int i = 0; i < *qtd_produtos; i++)
     {
         nome_produto = devolver_nome_produto(lista_produtos, i, erro);
         printf("%s: ", nome_produto);
         pilha_aux = pilha_especifica(lista_produtos, nome_produto, erro);
-        valor = retorna_topo_pilha(pilha_aux, erro);
-        fila_aux = fila_especifica(pilha_aux, valor, erro);
-        vencedor = retorna_inicio_fila(fila_aux, erro);
-        printf("%s comprou por R$%.2f\n", vencedor, valor);
+        valor = retorna_topo_pilha(pilha_aux, erro);        // aqui a fila esta funcionando corretamente
+        fila_aux = fila_especifica(pilha_aux, valor, erro); // função problema
+        if (!fila_vazia(&fila_aux))
+        {
+            vencedor = retorna_inicio_fila(fila_aux, erro);
+            printf("%s comprou por R$%.2f\n", vencedor, valor);
+        }
     }
 
     excluir_lista_produto(lista_produtos, erro);

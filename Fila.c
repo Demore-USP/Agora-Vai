@@ -36,8 +36,7 @@ void inserir_na_fila(Fila *F, char *nome_usuario, int *erro)
     }
 
     novo->ponteiro_usuario->nome = nome_usuario; // o ponteiro para o nome do usuario aponta para o endereço do nome
-
-    novo->prox = NULL; // Sempre aponta para NULL, pois sempre é inserido no fim
+    novo->prox = NULL;                           // Sempre aponta para NULL, pois sempre é inserido no fim
 
     if (fila_vazia(F))
     {

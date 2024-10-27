@@ -19,7 +19,7 @@ typedef struct Pilha
 
 void inicializar_pilha(Pilha *);
 int pilha_vazia(Pilha *);
-void empilhar(Pilha *, float, int *);
+void empilhar(Pilha *, Fila *, float, int *);
 float desempilhar(Pilha *, int *);
 float retorna_topo_pilha(Pilha *, int *);
 void copiar_pilha(Pilha *, Pilha *, int *);

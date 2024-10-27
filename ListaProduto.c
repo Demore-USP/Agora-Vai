@@ -99,7 +99,7 @@ void inserir_lance_produto(Lista_produto *LP, Lista_usuario *LU, char *nome_usua
 
     if (!esta_na_lista_usuario(LU, nome_usuario))
     { // se o usuario não esta na lista insere ele na lista e o produto na lista dele
-        inserir_lista_usuario(LU, nome_usuario, nome_produto, erro);
+        inserir_lista_usuario(LU, nome_usuario, aux->nome_produto.nome, erro);
     }
 
     else
@@ -116,12 +116,13 @@ void inserir_lance_produto(Lista_produto *LP, Lista_usuario *LU, char *nome_usua
     }
     if (*valor == topo)
     {
-        inserir_na_fila(&aux->lances.topo->fila_usuarios, nome_usuario, erro);
+        inserir_na_fila(&aux->lances.topo->fila_usuarios, LU->inicio->nome_usuario.nome, erro); // Lu->fim n é necessariamente isso
     }
     else
     {
-        empilhar(&aux->lances, *valor, erro);
-        inserir_na_fila(&aux->lances.topo->fila_usuarios, nome_usuario, erro);
+        empilhar(&aux->lances, NULL, *valor, erro); // passa a fila como nulo pois ela sera criada
+        inicializar_fila(&aux->lances.topo->fila_usuarios);
+        inserir_na_fila(&aux->lances.topo->fila_usuarios, LU->inicio->nome_usuario.nome, erro);
     }
 
     *erro = 0;
@@ -166,7 +167,7 @@ int vencedor_produto(Lista_produto *LP, char *nome_produto, char *nome_usuario)
 
     vencedor = aux->lances.topo->fila_usuarios.inicio->ponteiro_usuario->nome;
 
-    if (nome_usuario == vencedor)
+    if (strcmp(nome_usuario, vencedor))
     {
         return 1;
     }

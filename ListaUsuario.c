@@ -28,6 +28,7 @@ int esta_na_lista_usuario(Lista_usuario *L, char *nome_usuario)
     {
         if (strcmp(aux->nome_usuario.nome, nome_usuario) == 0)
             return 1;
+        aux = aux->prox;
     }
 
     return 0;
