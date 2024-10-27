@@ -22,6 +22,9 @@ int lista_usuario_vazia(Lista_usuario *L)
 
 int esta_na_lista_usuario(Lista_usuario *L, char *nome_usuario)
 {
+    if (lista_usuario_vazia(L))
+        return 0;
+
     No_Usuario *aux = L->inicio;
 
     while (aux != NULL)

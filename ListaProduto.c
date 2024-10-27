@@ -179,7 +179,7 @@ int vencedor_produto(Lista_produto *LP, char *nome_produto, char *nome_usuario)
 
     vencedor = aux->lances.topo->fila_usuarios.inicio->ponteiro_usuario->nome;
 
-    if (strcmp(nome_usuario, vencedor))
+    if (strcmp(nome_usuario, vencedor) == 0)
     {
         return 1;
     }

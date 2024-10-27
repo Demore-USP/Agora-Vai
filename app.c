@@ -127,6 +127,9 @@ void dar_lance(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int
     printf("\nEntre com o nome do produto: ");
     scanf("%s", nome_produto);
 
+    if (!esta_na_lista_usuario(lista_usuarios, nome_usuario))
+        (*qtd_usuarios)++;
+
     inserir_lance_produto(lista_produtos, lista_usuarios, nome_usuario, &valor, nome_produto, erro);
 
     if (*erro == 4)
@@ -134,8 +137,7 @@ void dar_lance(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int
         printf("Seu lance pelo(a) %s não foi aceito. Você precisa de um lance maior!", nome_produto);
         return;
     }
-    if (!esta_na_lista_usuario(lista_usuarios, nome_usuario))
-        (*qtd_usuarios)++;
+
     if (*erro == 2)
     {
         printf("Ops! parece que este produto não existe!\n");
