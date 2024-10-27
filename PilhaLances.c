@@ -78,6 +78,9 @@ float retorna_topo_pilha(Pilha *P, int *erro)
 
 void copiar_pilha(Pilha *PO, Pilha *PC, int *erro)
 {
+    Pilha temp;
+    inicializar_pilha(&temp);
+
     if (pilha_vazia(PO))
     {
         *erro = 1;
@@ -94,29 +97,45 @@ void copiar_pilha(Pilha *PO, Pilha *PC, int *erro)
     while (aux != NULL)
     {
         valor = aux->valor;
+        empilhar(&temp, &aux->fila_usuarios, valor, erro);
+        aux = aux->prox;
+    }
+
+    aux = temp.topo;
+
+    while (aux != NULL)
+    {
+        valor = aux->valor;
         empilhar(PC, &aux->fila_usuarios, valor, erro);
         aux = aux->prox;
     }
 
+    excluir_pilha(&temp, erro);
+
     *erro = 0;
 }
 
-Fila fila_especifica(Pilha *P, float valor, int *erro) {
+Fila fila_especifica(Pilha *P, float valor, int *erro)
+{
     Pilha aux;
     Fila temp;
     inicializar_fila(&temp); // Inicializa 'temp' corretamente
 
     inicializar_pilha(&aux);
     copiar_pilha(P, &aux, erro);
-    if (*erro != 0) {
+    if (*erro != 0)
+    {
         excluir_pilha(&aux, erro);
         return temp;
     }
 
-    while (!pilha_vazia(&aux)) {
-        if (valor == retorna_topo_pilha(&aux, erro)) {
+    while (!pilha_vazia(&aux))
+    {
+        if (valor == retorna_topo_pilha(&aux, erro))
+        {
             copiar_fila(&aux.topo->fila_usuarios, &temp, erro); // Copia a fila de usuários
-            if (*erro != 0) {
+            if (*erro != 0)
+            {
                 excluir_pilha(&aux, erro); // Certifica-se de liberar a pilha auxiliar em caso de erro
                 return temp;
             }
@@ -124,7 +143,8 @@ Fila fila_especifica(Pilha *P, float valor, int *erro) {
             return temp;
         }
         desempilhar(&aux, erro);
-        if (*erro != 0) {
+        if (*erro != 0)
+        {
             excluir_pilha(&aux, erro);
             return temp;
         }

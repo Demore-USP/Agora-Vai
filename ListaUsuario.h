@@ -7,8 +7,9 @@
 // Struct que armazena o nome do usuario e os produtos que ele deu lance
 typedef struct no_usuario
 {
+    // Declaração da struct usuário em si (contém o nome de fato e não um ponteiro)
     usuario nome_usuario;
-    Lista produtos; // Essa lista contém ponteiros para o nome dos produtos
+    Lista produtos; // Declaração da struct lista (cada nó guarda um ponteiro para um produto) 
     struct no_usuario *prox;
 } No_Usuario;
 

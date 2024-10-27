@@ -4,7 +4,7 @@
 // Struct que guarda apenas o nome do produto
 typedef struct
 {
-    char *nome; // Ponteiro para char (string)
+    char *nome; // String
 } produto;
 
 #endif

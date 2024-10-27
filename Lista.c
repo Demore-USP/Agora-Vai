@@ -111,6 +111,7 @@ void excluir_lista(Lista *L, int *erro)
     {
         temp = aux;      // Guarda o nó atual para liberar
         aux = aux->prox; // Avança para o próximo nó
+        free(temp->ponteiro_produto);
         free(temp);      // Libera o nó atual
     }
 

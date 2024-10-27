@@ -18,7 +18,7 @@ typedef struct no
 {
     // Declaração da struct produto em si (contém o nome de fato e não um ponteiro)
     produto nome_produto; 
-    // Declaração da pilha lances  
+    // Declaração da struct pilha (cada nó guarda um valor e uma fila de ponteiros para usuários) 
     Pilha lances;
     struct no *prox;
 } No_ListaProduto;
