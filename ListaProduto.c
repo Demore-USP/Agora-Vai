@@ -87,6 +87,7 @@ void inserir_lance_produto(Lista_produto *LP, Lista_usuario *LU, char *nome_usua
     No_ListaProduto *aux = LP->ini;
     Lista temp;
     float topo;
+    char *nome;
     while (aux != NULL && (strcmp(aux->nome_produto.nome, nome_produto)) != 0)
     {
         aux = aux->prox;
@@ -99,13 +100,20 @@ void inserir_lance_produto(Lista_produto *LP, Lista_usuario *LU, char *nome_usua
 
     if (!esta_na_lista_usuario(LU, nome_usuario))
     { // se o usuario não esta na lista insere ele na lista e o produto na lista dele
-        inserir_lista_usuario(LU, nome_usuario, aux->nome_produto.nome, erro);
+        nome = (char *)malloc((strlen(nome_usuario) + 1) * sizeof(char));
+        if (nome == NULL)
+        {
+            *erro = 1;
+            return; // Caso a alocação falhe, libera o nó, retorna e o erro é atualizado
+        }
+        strcpy(nome, nome_usuario);
+        inserir_lista_usuario(LU, nome, aux->nome_produto.nome, erro);
     }
 
     else
     {
         temp = devolver_lista_produtos(LU, nome_usuario, erro); // se estiver, insere apenas o produto
-        inserir_produto_no_usuario(&temp, nome_usuario, erro);
+        inserir_produto_no_usuario(&temp, nome_produto, erro);
     }
 
     topo = retorna_topo_pilha(&aux->lances, erro);
@@ -116,13 +124,13 @@ void inserir_lance_produto(Lista_produto *LP, Lista_usuario *LU, char *nome_usua
     }
     if (*valor == topo)
     {
-        inserir_na_fila(&aux->lances.topo->fila_usuarios, LU->inicio->nome_usuario.nome, erro); // Lu->fim n é necessariamente isso
+        inserir_na_fila(&aux->lances.topo->fila_usuarios, nome, erro); // Lu->fim n é necessariamente isso
     }
     else
     {
         empilhar(&aux->lances, NULL, *valor, erro); // passa a fila como nulo pois ela sera criada
         inicializar_fila(&aux->lances.topo->fila_usuarios);
-        inserir_na_fila(&aux->lances.topo->fila_usuarios, LU->inicio->nome_usuario.nome, erro);
+        inserir_na_fila(&aux->lances.topo->fila_usuarios, nome, erro);
     }
 
     *erro = 0;

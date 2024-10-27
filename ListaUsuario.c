@@ -46,16 +46,7 @@ void inserir_lista_usuario(Lista_usuario *L, char *nome_usuario, char *nome_prod
     }
 
     // Aloca memória para o nome do usuario
-    novo->nome_usuario.nome = (char *)malloc((strlen(nome_usuario) + 1) * sizeof(char));
-    if (novo->nome_usuario.nome == NULL)
-    {
-        free(novo);
-        *erro = 2;
-        return; // Caso a alocação falhe, libera o nó, retorna e o erro é atualizado
-    }
-
-    // Copia o nome do usuario
-    strcpy(novo->nome_usuario.nome, nome_usuario);
+    novo->nome_usuario.nome = nome_usuario;
 
     inicializar_lista(&novo->produtos); // Inicializa a lista de produtos para este usuário
 
