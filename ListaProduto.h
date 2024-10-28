@@ -36,7 +36,7 @@ void inicializar_lista_produto(Lista_produto *);
 int lista_produtos_vazia(Lista_produto *);
 void inserir_lista_produto(Lista_produto *, char *, char *, int *);
 void inserir_lance_produto(Lista_produto *, Lista_usuario *, char *, float *, char *, int *);
-char *devolver_nome_produto(Lista_produto *, int, int *);
+char *devolver_nome_produto(Lista_produto *, int);
 char *devolver_descricao_produto(Lista_produto *, int, int *);
 Pilha *pilha_especifica(Lista_produto *, char *, int *);
 int vencedor_produto(Lista_produto *, char *, char *);

@@ -161,7 +161,7 @@ void inserir_lance_produto(Lista_produto *LP, Lista_usuario *LU, char *nome_usua
     return;
 }
 
-char *devolver_nome_produto(Lista_produto *L, int indice, int *erro)
+char *devolver_nome_produto(Lista_produto *L, int indice)
 {
     No_ListaProduto *aux = L->ini;
     for (int i = 0; i < indice; i++)

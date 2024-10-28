@@ -42,7 +42,7 @@ int main()
         // Tela de opções do usuário
         printf("\n");
         printf("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-        printf("      |        Caro usuário, suas opções são:        |\n");
+        printf("      |        Caro usuário, suas opções são:    |\n");
         printf("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         printf("\n\n");
         printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
@@ -50,11 +50,11 @@ int main()
         printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         printf("\n");
         printf("~~~~~~~~~~~~~~~~~~~               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-        printf("| 3) Dar um lance |               | 4) Receber recomendações de produtos |\n");
+        printf("| 3) Dar um lance |               | 4) Receber recomendações de produtos|\n");
         printf("~~~~~~~~~~~~~~~~~~~               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         printf("\n");
         printf("~~~~~~~~~~~~~~~~~~~~~~            ~~~~~~~~~~~~~~~~~~~~~~\n");
-        printf("| 5)    Info         |            | 6) Encerrar leilão |\n");
+        printf("| 5)  Info leilão   |            | 6) Encerrar leilão |\n");
         printf("~~~~~~~~~~~~~~~~~~~~~~            ~~~~~~~~~~~~~~~~~~~~~~\n");
         printf("\n");
         printf("Digite a opção desejada: ");
@@ -123,8 +123,13 @@ void cadastrar_produto(Lista_produto *lista_produtos, int *qtd_produtos, int *er
     {
         inserir_lista_produto(lista_produtos, nome_produto, NULL, erro);
     }
+    if (*erro == 1) {
+        printf("Erro ao alocar memória!\n");
+        return;
+    }
+    
 
-    if (*erro)
+    if (*erro == 3)
     {
         printf("Produto já cadastrado anteriormente!\n");
         return;
@@ -151,6 +156,11 @@ void dar_lance(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int
         (*qtd_usuarios)++;
 
     inserir_lance_produto(lista_produtos, lista_usuarios, nome_usuario, &valor, nome_produto, erro);
+
+    if (*erro == 1) {
+        printf("Erro ao alocar memória!\n");
+        return;
+    } 
 
     if (*erro == 4)
     {
@@ -186,7 +196,7 @@ void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, in
 
     for (int i = 0; i < *qtd_produtos; i++)
     {
-        nome_produto = devolver_nome_produto(lista_produtos, i, erro);
+        nome_produto = devolver_nome_produto(lista_produtos, i);
         printf("%s: ", nome_produto);
         pilha_aux = pilha_especifica(lista_produtos, nome_produto, erro);
         if (pilha_vazia(pilha_aux))
@@ -277,7 +287,7 @@ void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usu
         printf("Para %s: não gostaria de dar um lance por:\n", nome_usuario);
         for (int j = 0; j < (*qtd_produtos); j++)
         {
-            nome_produto2 = devolver_nome_produto(lista_produtos, j, erro);
+            nome_produto2 = devolver_nome_produto(lista_produtos, j);
             flag2 = 0;
 
             for (int k = 0; k < tam; k++)
@@ -315,7 +325,7 @@ void informacoes_leilao(Lista_produto *lista_produtos, int *qtd_produtos, int *e
     printf("Produtos ofertados no leilão:\n");
     for (int i = 0; i < *qtd_produtos; i++)
     {
-        nome_produto = devolver_nome_produto(lista_produtos, i, erro);
+        nome_produto = devolver_nome_produto(lista_produtos, i);
         descricao_produto = devolver_descricao_produto(lista_produtos, i, erro);
         if (descricao_produto == NULL)
         {
@@ -338,11 +348,16 @@ void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuario
 
     for (int i = 0; i < *qtd_produtos; i++)
     {
-        nome_produto = devolver_nome_produto(lista_produtos, i, erro);
+        nome_produto = devolver_nome_produto(lista_produtos, i);
         printf("%s: ", nome_produto);
         pilha_aux = pilha_especifica(lista_produtos, nome_produto, erro);
-        valor = retorna_topo_pilha(pilha_aux, erro);        // aqui a fila esta funcionando corretamente
-        fila_aux = fila_especifica(pilha_aux, valor, erro); // função problema
+        if (pilha_vazia(pilha_aux)) {
+            printf("Nenhum lance para este produto!\n");
+            continue;
+        }
+        
+        valor = retorna_topo_pilha(pilha_aux, erro);
+        fila_aux = fila_especifica(pilha_aux, valor, erro);
         if (!fila_vazia(&fila_aux))
         {
             vencedor = retorna_inicio_fila(fila_aux, erro);
