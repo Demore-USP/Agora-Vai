@@ -268,7 +268,6 @@ void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usu
         nome_usuario = devolver_nome_usuario(lista_usuarios, i, erro);
         lista_produtos_usuario = devolver_lista_produtos(lista_usuarios, nome_usuario, erro);
         tam = tamanho_lista(lista_produtos_usuario);
-        printf("%s : %d\n", nome_usuario, tam);
         flag1 = 0;
 
         for (int j = 0; j < tam; j++)
