@@ -301,7 +301,7 @@ void informacoes_leilao(Lista_produto *lista_produtos, int *qtd_produtos, int *e
 {
     char *nome_produto, *descricao_produto;
     printf("Bem vindo ao leilão!\n");
-    printf("Seguem as instruções à respeito de seu funcionamento:\n");
+    printf("Seguem as instruções a respeito de seu funcionamento:\n");
     printf("Você como usuário receberá logo abaixo os nomes dos produtos, caso se interesse, poderá dar um lance nesse produto específico\n");
     printf("e concorrer ao mesmo até o fim do leilão, o usuário pode dar um lance igual ou maior do que o lance atual, vence quem der o maior lance,\n");
     printf("em caso de empate entre dois usuários ao final do leilão, vencerá aquele que forneceu o lance primeiro.\n");
