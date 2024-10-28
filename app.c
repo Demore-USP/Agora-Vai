@@ -42,7 +42,7 @@ int main()
         // Tela de opções do usuário
         printf("\n");
         printf("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-        printf("      |        Caro usuário, suas opções são:    |\n");
+        printf("      |        Caro usuário, suas opções são:        |\n");
         printf("      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         printf("\n\n");
         printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
@@ -50,11 +50,11 @@ int main()
         printf("~~~~~~~~~~~~~~~~~~~~~~~~~~~       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         printf("\n");
         printf("~~~~~~~~~~~~~~~~~~~               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
-        printf("| 3) Dar um lance |               | 4) Receber recomendações de produtos|\n");
+        printf("| 3) Dar um lance |               | 4) Receber recomendações de produtos |\n");
         printf("~~~~~~~~~~~~~~~~~~~               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         printf("\n");
         printf("~~~~~~~~~~~~~~~~~~~~~~            ~~~~~~~~~~~~~~~~~~~~~~\n");
-        printf("| 5)  Info leilão   |            | 6) Encerrar leilão |\n");
+        printf("| 5)  Info leilão    |            | 6) Encerrar leilão |\n");
         printf("~~~~~~~~~~~~~~~~~~~~~~            ~~~~~~~~~~~~~~~~~~~~~~\n");
         printf("\n");
         printf("Digite a opção desejada: ");
