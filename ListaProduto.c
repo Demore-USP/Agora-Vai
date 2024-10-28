@@ -15,7 +15,11 @@ void inicializar_lista_produto(Lista_produto *L)
     L->fim = NULL;
 }
 
-void inserir_lista_produto(Lista_produto *L, char *nome_produto, int *erro)
+int lista_produtos_vazia(Lista_produto *L) {
+    return (L->ini == NULL);
+}
+
+void inserir_lista_produto(Lista_produto *L, char *nome_produto, char *descricao, int *erro)
 {
     No_ListaProduto *novo = (No_ListaProduto *)malloc(sizeof(No_ListaProduto)); // Aloca memória para um novo Nó
     if (novo == NULL)
@@ -35,6 +39,23 @@ void inserir_lista_produto(Lista_produto *L, char *nome_produto, int *erro)
 
     // Copia o nome do produto
     strcpy(novo->nome_produto.nome, nome_produto);
+
+    if (descricao != NULL)
+    {
+        novo->descricao = (char *)malloc((strlen(descricao) + 1) * sizeof(char));
+        if (novo->descricao == NULL)
+        {
+            free(novo);
+            *erro = 1;
+            return; // Caso a alocação falhe, libera o nó, retorna e o erro é atualizado
+        }
+        strcpy(novo->descricao, descricao);
+    }
+
+    else
+    {
+        novo->descricao = NULL;
+    }
 
     inicializar_pilha(&novo->lances); // Inicializa a pilha de lances
 
@@ -151,6 +172,17 @@ char *devolver_nome_produto(Lista_produto *L, int indice, int *erro)
     return aux->nome_produto.nome;
 }
 
+char *devolver_descricao_produto(Lista_produto *L, int indice, int *erro)
+{
+    No_ListaProduto *aux = L->ini;
+    for (int i = 0; i < indice; i++)
+    {
+        aux = aux->prox;
+    }
+
+    return aux->descricao;
+}
+
 Pilha *pilha_especifica(Lista_produto *LP, char *nome_produto, int *erro)
 {
     No_ListaProduto *aux = LP->ini;
@@ -195,6 +227,9 @@ void excluir_lista_produto(Lista_produto *L, int *erro)
     {
         temp = aux;      // Guarda o nó atual para liberar
         aux = aux->prox; // Avança para o próximo nó
+
+        if (temp->descricao != NULL) // Desaloca a descrição do produto se necessário
+            free(temp->descricao);
 
         // Se a pilha não estiver vazia, é excluída
         if (!pilha_vazia(&temp->lances))

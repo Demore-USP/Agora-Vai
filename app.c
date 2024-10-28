@@ -19,6 +19,7 @@ void cadastrar_produto(Lista_produto *lista_produtos, int *qtd_produtos, int *er
 void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, int *erro);
 void dar_lance(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *erro);
 void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro);
+void informacoes_leilao(Lista_produto *lista_produtos, int *qtd_produtos, int *erro);
 void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro);
 
 int main()
@@ -53,7 +54,7 @@ int main()
         printf("~~~~~~~~~~~~~~~~~~~               ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n");
         printf("\n");
         printf("~~~~~~~~~~~~~~~~~~~~~~            ~~~~~~~~~~~~~~~~~~~~~~\n");
-        printf("| 5) Remover produto |            | 6) Encerrar leilão |\n");
+        printf("| 5)    Info         |            | 6) Encerrar leilão |\n");
         printf("~~~~~~~~~~~~~~~~~~~~~~            ~~~~~~~~~~~~~~~~~~~~~~\n");
         printf("\n");
         printf("Digite a opção desejada: ");
@@ -79,6 +80,7 @@ int main()
         }
         else if (opcao == 5)
         {
+            informacoes_leilao(&lista_produtos, &qtd_produtos, &erro);
         }
         else if (opcao == 6)
         {
@@ -99,10 +101,28 @@ int main()
 void cadastrar_produto(Lista_produto *lista_produtos, int *qtd_produtos, int *erro)
 {
     char nome_produto[100];
+    char resposta;
+    char descricao[100] = "";
     printf("\nEntre com o nome do produto: ");
     scanf("%s", nome_produto);
+    getchar();
 
-    inserir_lista_produto(lista_produtos, nome_produto, erro);
+    printf("Deseja inserir descrição? (s para sim, n para não): ");
+    scanf("%c", &resposta);
+    getchar();
+
+    if (resposta == 's')
+    {
+        fgets(descricao, sizeof(descricao), stdin); // Lê até 99 caracteres (o último é reservado para '\0')
+
+        // Remove o '\n' caso seja inserido no final da string
+        descricao[strcspn(descricao, "\n")] = '\0';
+        inserir_lista_produto(lista_produtos, nome_produto, descricao, erro);
+    }
+    else
+    {
+        inserir_lista_produto(lista_produtos, nome_produto, NULL, erro);
+    }
 
     if (*erro)
     {
@@ -167,7 +187,7 @@ void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, in
     for (int i = 0; i < *qtd_produtos; i++)
     {
         nome_produto = devolver_nome_produto(lista_produtos, i, erro);
-        printf("%s ", nome_produto);
+        printf("%s: ", nome_produto);
         pilha_aux = pilha_especifica(lista_produtos, nome_produto, erro);
         if (pilha_vazia(pilha_aux))
         {
@@ -274,6 +294,36 @@ void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usu
                 printf("- %s\n", nome_produto2);
             }
         }
+    }
+}
+
+void informacoes_leilao(Lista_produto *lista_produtos, int *qtd_produtos, int *erro)
+{
+    char *nome_produto, *descricao_produto;
+    printf("Bem vindo ao leilão!\n");
+    printf("Seguem as instruções à respeito de seu funcionamento:\n");
+    printf("Você como usuário receberá logo abaixo os nomes dos produtos, caso se interesse, poderá dar um lance nesse produto específico\n");
+    printf("e concorrer ao mesmo até o fim do leilão, o usuário pode dar um lance igual ou maior do que o lance atual, vence quem der o maior lance,\n");
+    printf("em caso de empate entre dois usuários ao final do leilão, vencerá aquele que forneceu o lance primeiro.\n");
+
+    if (lista_produtos_vazia(lista_produtos))
+    {
+        printf("Nenhum produto cadastrado até o momento\n");
+        return;
+    }
+
+    printf("Produtos ofertados no leilão:\n");
+    for (int i = 0; i < *qtd_produtos; i++)
+    {
+        nome_produto = devolver_nome_produto(lista_produtos, i, erro);
+        descricao_produto = devolver_descricao_produto(lista_produtos, i, erro);
+        if (descricao_produto == NULL)
+        {
+            printf("- %s: sem descricao\n", nome_produto);
+            continue;
+        }
+        printf("- %s: ", nome_produto);
+        printf("%s\n", descricao_produto);
     }
 }
 

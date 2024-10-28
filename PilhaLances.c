@@ -170,7 +170,7 @@ void excluir_pilha(Pilha *P, int *erro)
     // Percorre a pilha e libera cada nó
     while (atual != NULL)
     {
-        temp = atual; // Guarda o nó atual para liberar
+        temp = atual;        // Guarda o nó atual para liberar
         atual = atual->prox; // Avança para o próximo nó
         excluir_fila(&temp->fila_usuarios, erro);
         free(temp); // Libera o nó
