@@ -14,7 +14,7 @@ void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, in
 void dar_lance(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *erro);
 void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro);
 void informacoes_leilao(Lista_produto *lista_produtos, int *qtd_produtos, int *erro);
-void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_produtos, int *erro);
+void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro);
 void fechar_programa(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_produtos, int *erro);
 
 int main()
@@ -84,7 +84,7 @@ int main()
         }
         else if (opcao == 6)
         {
-            encerrar_leilao(&lista_produtos, &lista_usuarios, &qtd_produtos, &erro);
+            encerrar_leilao(&lista_produtos, &lista_usuarios, &qtd_usuarios, &qtd_produtos, &erro);
             printf("Leilão encerrado!\n");
 
         }
@@ -373,7 +373,7 @@ void informacoes_leilao(Lista_produto *lista_produtos, int *qtd_produtos, int *e
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_produtos, int *erro)
+void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro)
 {
     // Variáveis auxiliares
     char *nome_produto;
@@ -406,6 +406,8 @@ void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuario
 
     excluir_lista_produto(lista_produtos, erro); // Exclui tudo
     excluir_lista_usuario(lista_usuarios, erro); // Exclui tudo
+    *qtd_usuarios = 0; // Zera o contador de usuários
+    *qtd_produtos = 0; // Zera o contador de produtos
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void fechar_programa(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_produtos, int *erro) {
