@@ -243,8 +243,11 @@ void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, in
             copiar_fila(&fila_aux, &fila_copia, erro);          // Copia a fila de usuários
             excluir_fila(&fila_aux, erro);                      // Exclui a fila, deixando apenas a cópia
             num = tamanho_fila(&fila_copia);                    // Pega o tamanho da fila de usuários
-            printf("%d lances de R$%.2f: ", num, valor);        // Printa os lances
-            for (int j = 0; j < num; j++)                       // Para cada usuário
+            if (num > 1)                                        // se o tamanho da fila for maior que 1, printa no singular
+                printf("%d lances de R$%.2f: ", num, valor);    // Printa os lances
+            else
+                printf("%d lance de R$%.2f: ", num, valor);
+            for (int j = 0; j < num; j++) // Para cada usuário
             {
                 if (j < num - 1)
                 {
