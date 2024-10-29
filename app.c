@@ -86,7 +86,6 @@ int main()
         {
             encerrar_leilao(&lista_produtos, &lista_usuarios, &qtd_usuarios, &qtd_produtos, &erro);
             printf("Leilão encerrado!\n");
-
         }
         else if (opcao == 7)
         {
@@ -135,7 +134,8 @@ void cadastrar_produto(Lista_produto *lista_produtos, int *qtd_produtos, int *er
     }
 
     // Tratamento de erros
-    if (*erro == 1) {
+    if (*erro == 1)
+    {
         printf("\nErro ao alocar memória!\n");
         return;
     }
@@ -170,14 +170,15 @@ void dar_lance(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int
     if (!esta_na_lista_usuario(lista_usuarios, nome_usuario))
         (*qtd_usuarios)++;
 
-    // Insere o lance em questão 
+    // Insere o lance em questão
     inserir_lance_produto(lista_produtos, lista_usuarios, nome_usuario, &valor, nome_produto, erro);
 
     // Tratamento de erros
-    if (*erro == 1) {
+    if (*erro == 1)
+    {
         printf("\nErro ao alocar memória!\n");
         return;
-    } 
+    }
     if (*erro == 4)
     {
         printf("\nSeu lance pelo(a) %s não foi aceito. Você precisa de um lance maior!\n", nome_produto);
@@ -211,23 +212,24 @@ void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, in
     Pilha *pilha_aux;
     Fila fila_aux;
 
-    if(*qtd_produtos == 0){
+    if (*qtd_produtos == 0)
+    {
         printf("\nSem produtos! Não gostaria de cadastrar um produto?\n");
     }
 
     // Para cada produto na lista de produtos
     for (int i = 0; i < *qtd_produtos; i++)
     {
-        nome_produto = devolver_nome_produto(lista_produtos, i); // Pega o nome do produto
-        printf("%s: ", nome_produto); // Printa o nome
+        nome_produto = devolver_nome_produto(lista_produtos, i);          // Pega o nome do produto
+        printf("%s: ", nome_produto);                                     // Printa o nome
         pilha_aux = pilha_especifica(lista_produtos, nome_produto, erro); // Pega a pilha de lances do produto
-        if (pilha_vazia(pilha_aux)) // Se não houver lances
+        if (pilha_vazia(pilha_aux))                                       // Se não houver lances
         {
             printf("nenhum lance para este produto!\n");
             continue; // Passa para o próximo produto
         }
         copiar_pilha(pilha_aux, &pilha_copia, erro); // Copia a pilha de lances
-        while (!pilha_vazia(&pilha_copia)) // Percorre a pilha 
+        while (!pilha_vazia(&pilha_copia))           // Percorre a pilha
         {
             valor = desempilhar(&pilha_copia, erro); // Pega o valor e mata o nó
             if (*erro)
@@ -238,11 +240,11 @@ void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, in
             }
 
             fila_aux = fila_especifica(pilha_aux, valor, erro); // Pega a fila de usuários que deram o lance
-            copiar_fila(&fila_aux, &fila_copia, erro); // Copia a fila de usuários
-            excluir_fila(&fila_aux, erro); // Exclui a fila, deixando apenas a cópia
-            num = tamanho_fila(&fila_copia); // Pega o tamanho da fila de usuários
-            printf("%d lances de R$%.2f: ", num, valor); // Printa os lances
-            for (int j = 0; j < num; j++) // Para cada usuário
+            copiar_fila(&fila_aux, &fila_copia, erro);          // Copia a fila de usuários
+            excluir_fila(&fila_aux, erro);                      // Exclui a fila, deixando apenas a cópia
+            num = tamanho_fila(&fila_copia);                    // Pega o tamanho da fila de usuários
+            printf("%d lances de R$%.2f: ", num, valor);        // Printa os lances
+            for (int j = 0; j < num; j++)                       // Para cada usuário
             {
                 if (j < num - 1)
                 {
@@ -293,16 +295,16 @@ void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usu
     {
         nome_usuario = devolver_nome_usuario(lista_usuarios, i, erro); // Pega o nome do usuário
         // Pega a lista de produtos do usuário
-        lista_produtos_usuario = devolver_lista_produtos(lista_usuarios, nome_usuario, erro); 
+        lista_produtos_usuario = devolver_lista_produtos(lista_usuarios, nome_usuario, erro);
         tam = tamanho_lista(lista_produtos_usuario); // Pega quantos produtos o usuário deu lance
-        flag1 = 0; // Ajusta a flag
+        flag1 = 0;                                   // Ajusta a flag
 
         // Para cada produto deste usuário
-        for (int j = 0; j < tam; j++) 
+        for (int j = 0; j < tam; j++)
         {
             nome_produto1 = devolver_produto(lista_produtos_usuario, j, erro); // Pega o nome do produto]
-            //Verifica se o usuário é o vencedor deste produto
-            if (!vencedor_produto(lista_produtos, nome_produto1, nome_usuario)) 
+            // Verifica se o usuário é o vencedor deste produto
+            if (!vencedor_produto(lista_produtos, nome_produto1, nome_usuario))
             {
                 flag1 = 1;
                 break;
@@ -313,25 +315,25 @@ void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usu
         if (flag1 == 0 || tam == *qtd_produtos)
             continue;
 
-        // Printa o nome do usuário 
+        // Printa o nome do usuário
         printf("\nPara %s: não gostaria de dar um lance por:\n", nome_usuario);
         // Para cada produto que foi cadastrado
         for (int j = 0; j < (*qtd_produtos); j++)
         {
             nome_produto2 = devolver_nome_produto(lista_produtos, j); // Pega o nome do produto
-            flag2 = 0; // Ajusta a flag
+            flag2 = 0;                                                // Ajusta a flag
 
             for (int k = 0; k < tam; k++) // Para cada produto que o usuário deu lance
             {
                 // Pega o nome do produto que o usuário deu lance
-                nome_produto1 = devolver_produto(lista_produtos_usuario, k, erro); 
+                nome_produto1 = devolver_produto(lista_produtos_usuario, k, erro);
                 if (strcmp(nome_produto1, nome_produto2) == 0) // Compara com o nome do produto cadastrado
                 {
                     flag2 = 1;
                     break;
                 }
             }
-            // Verifica se o usuário não deu lance no produto 
+            // Verifica se o usuário não deu lance no produto
             if (flag2 == 0)
             {
                 printf("- %s\n", nome_produto2); // Recomenda o produto
@@ -341,14 +343,15 @@ void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usu
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-// Essa função dá instruções ao usuário 
+// Essa função dá instruções ao usuário
 void informacoes_leilao(Lista_produto *lista_produtos, int *qtd_produtos, int *erro)
 {
     char *nome_produto, *descricao_produto;
     printf("Bem vindo ao leilão! ");
     printf("Seguem as instruções a respeito de seu funcionamento:\n");
     printf("Você, como usuário, receberá abaixo os nomes dos produtos e, caso se interesse, poderá dar um lance nesse produto.\n");
-    printf("Ao dar um lance, o usuário concorre ao produto escolhido. Outros usuários podem dar um lance de valor igual ou maior. Cada usuário pode dar quantos lances quiser. Ao fim, vence quem der o maior lance!\n");
+    printf("Ao dar um lance, o usuário concorre ao produto escolhido. Outros usuários podem dar um lance de valor igual ou maior.\n");
+    printf("Cada usuário pode dar quantos lances quiser. Ao fim, vence quem der o maior lance!\n");
     printf("Obs: Em caso de empate entre dois lances, o usuário vencedor será aquele que deu o lance primeiro.\n");
 
     if (lista_produtos_vazia(lista_produtos))
@@ -382,19 +385,19 @@ void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuario
     Pilha *pilha_aux;
     Fila fila_aux;
 
-    // Para cada produto 
+    // Para cada produto
     for (int i = 0; i < *qtd_produtos; i++)
     {
-        nome_produto = devolver_nome_produto(lista_produtos, i); // Pega o nome do produto
-        printf("%s: ", nome_produto); // Printa o produto
+        nome_produto = devolver_nome_produto(lista_produtos, i);          // Pega o nome do produto
+        printf("%s: ", nome_produto);                                     // Printa o produto
         pilha_aux = pilha_especifica(lista_produtos, nome_produto, erro); // Pega a pilha deste produto
-        if (pilha_vazia(pilha_aux)) // Se não houver lances
+        if (pilha_vazia(pilha_aux))                                       // Se não houver lances
         {
             printf("nenhum lance para este produto!\n");
             continue; // Avança para o próximo produto
         }
-        
-        valor = retorna_topo_pilha(pilha_aux, erro); // Pega o maior lance
+
+        valor = retorna_topo_pilha(pilha_aux, erro);        // Pega o maior lance
         fila_aux = fila_especifica(pilha_aux, valor, erro); // Pega a fila de usuários que deram este lance
         if (!fila_vazia(&fila_aux))
         {
@@ -406,11 +409,12 @@ void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuario
 
     excluir_lista_produto(lista_produtos, erro); // Exclui tudo
     excluir_lista_usuario(lista_usuarios, erro); // Exclui tudo
-    *qtd_usuarios = 0; // Zera o contador de usuários
-    *qtd_produtos = 0; // Zera o contador de produtos
+    *qtd_usuarios = 0;                           // Zera o contador de usuários
+    *qtd_produtos = 0;                           // Zera o contador de produtos
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void fechar_programa(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_produtos, int *erro) {
+void fechar_programa(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_produtos, int *erro)
+{
     // Variáveis auxiliares
     char *nome_produto;
     Pilha *pilha_aux;
@@ -418,15 +422,15 @@ void fechar_programa(Lista_produto *lista_produtos, Lista_usuario *lista_usuario
     // Para cada produto
     for (int i = 0; i < *qtd_produtos; i++)
     {
-        nome_produto = devolver_nome_produto(lista_produtos, i); // Pega o nome do produto
+        nome_produto = devolver_nome_produto(lista_produtos, i);          // Pega o nome do produto
         pilha_aux = pilha_especifica(lista_produtos, nome_produto, erro); // Pega a pilha de lances do produto
-        if (pilha_vazia(pilha_aux)) // Se não houver lances
+        if (pilha_vazia(pilha_aux))                                       // Se não houver lances
         {
             continue;
         }
         fila_aux = fila_especifica(pilha_aux, retorna_topo_pilha(pilha_aux, erro), erro); //
         excluir_fila(&fila_aux, erro);
     }
-    excluir_lista_produto(lista_produtos, erro); //Exclui tudo
-    excluir_lista_usuario(lista_usuarios, erro); //Exclui tudo
+    excluir_lista_produto(lista_produtos, erro); // Exclui tudo
+    excluir_lista_usuario(lista_usuarios, erro); // Exclui tudo
 }
