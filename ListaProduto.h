@@ -6,21 +6,15 @@
 #include "produto.h"
 #include "ListaUsuario.h"
 
-// Erros:
-// 1- Erro ao alocar memória
-// 2- Produto não encontrado
-// 3- Produto já existente
-// 4- Lance não válido
-
-// Struct que armazena o nome do produto,
-// com os lances dados nele
+/* Struct que armazena o nome do produto (alocado dinamicamente), junto a sua descrição
+e os produtos que ele deu lance (armazena ponteiros para esses produtos)*/ 
 typedef struct no
 {
-    // Declaração da struct produto em si (contém o nome de fato e não um ponteiro)
-    produto nome_produto;
-    char *descricao;
-    // Declaração da struct pilha (cada nó guarda um valor e uma fila de ponteiros para usuários)
-    Pilha lances;
+    
+    produto nome_produto; // Declaração da struct produto (contém o nome de fato e não um ponteiro)
+    char *descricao; // String que armazena a descrição do produto
+    Pilha lances; // Declaração da struct pilha (cada nó guarda um valor e uma fila
+    // de ponteiros para os usuários que deram lances daquele valor)
     struct no *prox;
 } No_ListaProduto;
 

@@ -1,8 +1,8 @@
 # Variáveis
-CC = gcc                  # Compilador
-CFLAGS = -O3 -Wall -g    # Opções de compilação: otimização O3, avisos e depuração
-EXEC = programa           # Nome do executável
-OBJ = app.o ListaProduto.o ListaUsuario.o PilhaLances.o Fila.o Lista.o  # Arquivos objeto
+CC = gcc # Compilador
+CFLAGS = -O3 -Wall -g # Opções de compilação: otimização O3, avisos e depuração
+EXEC = programa # Nome do executável
+OBJ = app.o ListaProduto.o ListaUsuario.o PilhaLances.o Fila.o Lista.o # Arquivos objeto
 
 # Regra padrão
 all: $(EXEC)

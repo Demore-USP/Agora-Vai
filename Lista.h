@@ -3,7 +3,7 @@
 
 #include "produto.h"
 
-// Cada nó armazena um ponteiro para um produto
+// Struct que cada nó armazena um ponteiro para um produto
 typedef struct no_lista
 {
     produto *ponteiro_produto; // Ponteiro para a struct produto (que contém o nome)

@@ -3,8 +3,8 @@
 
 #include "Fila.h"
 
-// Struct que armazena um valor e uma fila de ponteiros 
-// para usuarios que deram aquele lance
+/* Struct que armazena um valor de um lance e uma fila de ponteiros
+para quaisquer usuarios que deram um lance deste mesmo valor */  
 typedef struct no_pilha
 {
     float valor;
@@ -12,7 +12,7 @@ typedef struct no_pilha
     struct no_pilha *prox;
 } No_Pilha;
 
-// Ponteiro topo da Pilha (sempre aponta pro lance mais alto)
+// Ponteiro topo (sempre aponta pro lance mais alto)
 typedef struct Pilha
 {
     No_Pilha *topo;

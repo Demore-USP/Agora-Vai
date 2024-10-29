@@ -3,7 +3,7 @@
 
 #include "usuario.h"
 
-// Cada nó armazena um ponteiro para um usuário 
+// Struct que cada nó armazena um ponteiro para um usuário 
 typedef struct no_fila
 {
     usuario *ponteiro_usuario; // Ponteiro para a struct usuário (que contém o nome)

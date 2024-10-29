@@ -4,10 +4,11 @@
 #include "ListaProduto.h"
 #include "Lista.h"
 
-// Struct que armazena o nome do usuario e os produtos que ele deu lance
+/* Struct que armazena o nome do usuario (alocado dinamicamente) 
+e os produtos que ele deu lance (armazena ponteiros para esses produtos)*/ 
 typedef struct no_usuario
 {
-    // Declaração da struct usuário em si (contém o nome de fato e não um ponteiro)
+    // Declaração da struct usuário (contém o nome de fato e não um ponteiro)
     usuario nome_usuario;
     Lista produtos; // Declaração da struct lista (cada nó guarda um ponteiro para um produto) 
     struct no_usuario *prox;
@@ -20,6 +21,7 @@ typedef struct Lista_usuario
     No_Usuario *fim;
 } Lista_usuario;
 
+// Protótipo das funções utilizadas
 void inicializar_lista_usuario(Lista_usuario *);
 int lista_usuario_vazia(Lista_usuario *);
 int esta_na_lista_usuario(Lista_usuario *, char *);
