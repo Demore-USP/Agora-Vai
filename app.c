@@ -14,7 +14,8 @@ void listar_produtos_lances(Lista_produto *lista_produtos, int *qtd_produtos, in
 void dar_lance(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *erro);
 void recomendar_produtos(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro);
 void informacoes_leilao(Lista_produto *lista_produtos, int *qtd_produtos, int *erro);
-void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro);
+void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_produtos, int *erro);
+void fechar_programa(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_produtos, int *erro);
 
 int main()
 {
@@ -32,7 +33,7 @@ int main()
     inicializar_lista_usuario(&lista_usuarios);
 
     // Loop que "roda o leilão"
-    while (opcao != 6)
+    while (opcao != 7)
     {
         // Tela de opções do usuário
         printf("\n");
@@ -51,6 +52,10 @@ int main()
         printf("~~~~~~~~~~~~~~~~~~~               ~~~~~~~~~~~~~~~~~~~~~~\n");
         printf("| 5)  Informações |               | 6) Encerrar leilão |\n");
         printf("~~~~~~~~~~~~~~~~~~~               ~~~~~~~~~~~~~~~~~~~~~~\n");
+        printf("\n");
+        printf("~~~~~~~~~~~~~~~~~~~~~~~\n");
+        printf("| 7)  Fechar programa |\n");
+        printf("~~~~~~~~~~~~~~~~~~~~~~~\n");
         printf("\n");
         printf("Digite a opção desejada: ");
         scanf("%d", &opcao);
@@ -79,7 +84,13 @@ int main()
         }
         else if (opcao == 6)
         {
-            encerrar_leilao(&lista_produtos, &lista_usuarios, &qtd_usuarios, &qtd_produtos, &erro);
+            encerrar_leilao(&lista_produtos, &lista_usuarios, &qtd_produtos, &erro);
+            printf("Leilão encerrado!\n");
+
+        }
+        else if (opcao == 7)
+        {
+            fechar_programa(&lista_produtos, &lista_usuarios, &qtd_produtos, &erro);
             break;
         }
         else
@@ -88,7 +99,7 @@ int main()
         }
     }
 
-    printf("Leilão encerrado!");
+    printf("Programa encerrado!");
     return 0;
 }
 
@@ -362,7 +373,7 @@ void informacoes_leilao(Lista_produto *lista_produtos, int *qtd_produtos, int *e
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_usuarios, int *qtd_produtos, int *erro)
+void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_produtos, int *erro)
 {
     // Variáveis auxiliares
     char *nome_produto;
@@ -395,4 +406,25 @@ void encerrar_leilao(Lista_produto *lista_produtos, Lista_usuario *lista_usuario
 
     excluir_lista_produto(lista_produtos, erro); // Exclui tudo
     excluir_lista_usuario(lista_usuarios, erro); // Exclui tudo
+}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void fechar_programa(Lista_produto *lista_produtos, Lista_usuario *lista_usuarios, int *qtd_produtos, int *erro) {
+    // Variáveis auxiliares
+    char *nome_produto;
+    Pilha *pilha_aux;
+    Fila fila_aux;
+    // Para cada produto
+    for (int i = 0; i < *qtd_produtos; i++)
+    {
+        nome_produto = devolver_nome_produto(lista_produtos, i); // Pega o nome do produto
+        pilha_aux = pilha_especifica(lista_produtos, nome_produto, erro); // Pega a pilha de lances do produto
+        if (pilha_vazia(pilha_aux)) // Se não houver lances
+        {
+            continue;
+        }
+        fila_aux = fila_especifica(pilha_aux, retorna_topo_pilha(pilha_aux, erro), erro); //
+        excluir_fila(&fila_aux, erro);
+    }
+    excluir_lista_produto(lista_produtos, erro); //Exclui tudo
+    excluir_lista_usuario(lista_usuarios, erro); //Exclui tudo
 }
